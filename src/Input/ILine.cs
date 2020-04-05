@@ -1,8 +1,8 @@
 namespace PromptCLI
 {
-    public interface ILine
+    public interface ILine<T>
     {
         string Text { get; }
-        string Regex { get; }
+        T Status { get; set; }
     }
 }

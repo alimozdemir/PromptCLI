@@ -1,28 +1,19 @@
 namespace PromptCLI
 {
-    public class Option : ILine
+    public class Option<T>
     {
-        private readonly string _regex;
-        private readonly string _text;
+        public string Text { get; set; }
+        public T Value { get; set; }
 
-        public Option(string optionText)
+        public Option((string text, T val) vals)
         {
-            _text = string.Format("( ) {0} ", optionText);
-            _regex = "^[ ]";
+            Text = vals.text;
+            Value = vals.val;
         }
 
-        public Option((string optionText, string val) vals)
+        public static implicit operator Option<T>((string text, T val) val)
         {
-        }
-
-        public string Text => _text;
-
-        public string Regex => _regex;
-        public bool Status { get; set; }
-
-        public static implicit operator Option(string val)
-        {
-            return new Option(val);
+            return new Option<T>(val);
         }
     }
 

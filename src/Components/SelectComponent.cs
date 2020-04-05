@@ -5,20 +5,20 @@ using System.Text.RegularExpressions;
 
 namespace PromptCLI
 {
-    public class SelectComponent : IComponent
+    public class SelectComponent<T> : IComponent<T>
     {
-        private readonly Input _input;
-        private readonly List<Option> _selects;
+        private readonly Input<T> _input;
+        private readonly List<Option<T>> _selects;
         private readonly Range _range;
         private int _cursorPointLeft;
         private int _cursorPointTop, _offsetTop;
         private string _regex;
         public Range AvailableRange => _range;
 
-        public string Result => string.Join(",", _selects.Where(i => i.Status).Select(i => i.Text));
+        public T Result => _selects[_cursorPointTop - _offsetTop - 1].Value;
         public bool IsCompleted { get; set; }
 
-        public SelectComponent(Input input, List<Option> selects)
+        public SelectComponent(Input<T> input, List<Option<T>> selects)
         {
             _input = input;
             _selects = selects;
@@ -44,7 +44,7 @@ namespace PromptCLI
 
             Console.Write(_input.Text);
             Console.Write(" > ");
-            ConsoleHelper.Write(Result, ConsoleColor.Cyan);
+            ConsoleHelper.Write(Result.ToString(), ConsoleColor.Cyan);
             Console.WriteLine();
         }
         public void Draw()
@@ -91,12 +91,9 @@ namespace PromptCLI
             }
 
             var index = _cursorPointTop - _offsetTop - 1;
-            var currentLine = _selects[index];
-
 
             SetPosition();
-            currentLine.Status = !currentLine.Status;
-            Console.Write(currentLine.Status ? '•' : ' ');
+            Console.ForegroundColor = ConsoleColor.Green;
             SetPosition();
         }
 

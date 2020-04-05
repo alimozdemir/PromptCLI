@@ -5,25 +5,27 @@ using System.Text.RegularExpressions;
 
 namespace PromptCLI
 {
-    public class CheckboxComponent : IComponent
+    public class CheckboxComponent<T> : IComponent<IEnumerable<T>>
     {
-        private readonly Input _input;
-        private readonly List<Option> _selects;
+        private readonly Input<IEnumerable<T>> _input;
+        private readonly List<Option<T>> _selects;
+        private readonly bool[] _status;
         private readonly Range _range;
         private int _cursorPointLeft;
         private int _cursorPointTop, _offsetTop;
         private string _regex;
         public Range AvailableRange => _range;
 
-        public string Result => string.Join(",", _selects.Where(i => i.Status).Select(i => i.Text));
+        public IEnumerable<T> Result => _status.Where(i => i).Select((i, index) => _selects[index].Value);
         public bool IsCompleted { get; set; }
 
-        public CheckboxComponent(Input input, List<Option> selects)
+        public CheckboxComponent(Input<IEnumerable<T>> input, List<Option<T>> selects)
         {
             _input = input;
             _selects = selects;
             _range = 1..2;
             _regex = "^[ ]";
+            _status = new bool[_selects.Count];
         }
 
         public void Clear()
@@ -39,7 +41,7 @@ namespace PromptCLI
 
             foreach(var item in _selects)
             {
-                Console.WriteLine(item.Text);
+                Console.WriteLine("( ) {0}", item.Text);
             }
 
             SetPosition();
@@ -68,6 +70,8 @@ namespace PromptCLI
             if (result == KeyInfo.Unknown)
             {
                 SetPosition();
+                Console.Write(' ');
+                SetPosition();
                 return;
             }
             else if (result == KeyInfo.Direction)
@@ -77,12 +81,10 @@ namespace PromptCLI
             }
 
             var index = _cursorPointTop - _offsetTop - 1;
-            var currentLine = _selects[index];
-            
 
             SetPosition();
-            currentLine.Status = !currentLine.Status;
-            Console.Write(currentLine.Status ? '•' : ' ');
+            _status[index] = !_status[index];
+            Console.Write(_status[index] ? '•' : ' ');
             SetPosition();
         }
 
@@ -129,6 +131,19 @@ namespace PromptCLI
 
         public void Done()
         {
+            for (int i = 0; i < _selects.Count + 1; i++)
+            {
+                ConsoleHelper.ClearLine(_offsetTop + i);
+            }
+            
+            _cursorPointLeft = 0;
+            _cursorPointTop = _offsetTop;
+            SetPosition();
+
+            Console.Write(_input.Text);
+            Console.Write(" > ");
+            ConsoleHelper.Write(Result.ToString(), ConsoleColor.Cyan);
+            Console.WriteLine();
         }
     }
 

@@ -3,9 +3,9 @@ using System.Text.RegularExpressions;
 
 namespace PromptCLI
 {
-    public class InputComponent : IComponent
+    public class InputComponent : IComponent<string>
     {
-        private readonly Input _input;
+        private readonly Input<string> _input;
         private readonly Range _range;
         private int _cursorPointLeft;
         private int _cursorPointTop;
@@ -15,7 +15,7 @@ namespace PromptCLI
         public string Result => _input.Status;
         public bool IsCompleted { get; set; }
 
-        public InputComponent(Input input)
+        public InputComponent(Input<string> input)
         {
             _input = input;
             _range = input.Text.Length..;
@@ -28,6 +28,7 @@ namespace PromptCLI
         {
             Console.Clear();
             Console.SetCursorPosition(0, 0);
+            
         }
 
         public void Draw()
