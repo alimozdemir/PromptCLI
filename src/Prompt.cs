@@ -45,6 +45,8 @@ namespace PromptCLI
                 }
                 while (key.Key != ConsoleKey.Enter);
 
+                _currentComponent.Done();
+
                 _offsetTop += _currentComponent.GetTopPosition();
 
                 Console.SetCursorPosition(0, _offsetTop);

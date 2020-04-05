@@ -134,6 +134,10 @@ namespace PromptCLI
         {
             return 1;
         }
+
+        public void Done()
+        {
+        }
     }
 
 }

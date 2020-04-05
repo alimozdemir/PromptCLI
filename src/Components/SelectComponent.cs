@@ -31,13 +31,27 @@ namespace PromptCLI
             Console.Clear();
             Console.SetCursorPosition(0, 0);
         }
-        
+        public void Done()
+        {
+            for (int i = 0; i < _selects.Count + 1; i++)
+            {
+                ConsoleHelper.ClearLine(_offsetTop + i);
+            }
+            
+            _cursorPointLeft = 0;
+            _cursorPointTop = _offsetTop;
+            SetPosition();
 
+            Console.Write(_input.Text);
+            Console.Write(" > ");
+            ConsoleHelper.Write(Result, ConsoleColor.Cyan);
+            Console.WriteLine();
+        }
         public void Draw()
         {
             Console.WriteLine(_input.Text);
 
-            foreach(var item in _selects)
+            foreach (var item in _selects)
             {
                 Console.WriteLine(item.Text);
             }
@@ -78,7 +92,7 @@ namespace PromptCLI
 
             var index = _cursorPointTop - _offsetTop - 1;
             var currentLine = _selects[index];
-            
+
 
             SetPosition();
             currentLine.Status = !currentLine.Status;
@@ -122,12 +136,12 @@ namespace PromptCLI
             _cursorPointLeft = _range.Start.Value;
         }
 
-
-
         public int GetTopPosition()
         {
-            return 1 + _selects.Count;
+            return 1;
         }
+
+
     }
 
 }

@@ -12,5 +12,6 @@ namespace PromptCLI
         void Draw();
         void SetTopPosition(int top);
         int GetTopPosition();
+        void Done();
     }
 }

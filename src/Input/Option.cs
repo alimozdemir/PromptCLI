@@ -11,6 +11,10 @@ namespace PromptCLI
             _regex = "^[ ]";
         }
 
+        public Option((string optionText, string val) vals)
+        {
+        }
+
         public string Text => _text;
 
         public string Regex => _regex;

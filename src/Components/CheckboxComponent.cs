@@ -23,7 +23,7 @@ namespace PromptCLI
             _input = input;
             _selects = selects;
             _range = 1..2;
-            _regex = "^[a-zA-Z0-9. _\b]";
+            _regex = "^[ ]";
         }
 
         public void Clear()
@@ -125,6 +125,10 @@ namespace PromptCLI
         public int GetTopPosition()
         {
             return 1 + _selects.Count;
+        }
+
+        public void Done()
+        {
         }
     }
 
