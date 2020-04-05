@@ -1,6 +1,6 @@
 using System;
 
-namespace Prompt
+namespace PromptCLI
 {
     internal static class ConsoleHelper
     {
@@ -41,6 +41,16 @@ namespace Prompt
 
             Console.ForegroundColor = backupTextColor;
             Console.BackgroundColor = backupBackgroudColor;
+        }
+
+
+        public static void ClearLine(int top)
+        {
+            Console.SetCursorPosition(0, top);
+            for (int i = 0; i < Console.WindowWidth; i++) 
+            {
+                Console.Write(' ');
+            }
         }
     }
 

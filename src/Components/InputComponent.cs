@@ -1,7 +1,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace Prompt
+namespace PromptCLI
 {
     public class InputComponent : IComponent
     {

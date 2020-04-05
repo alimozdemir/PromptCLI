@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Prompt
+namespace PromptCLI
 {
-    
-    public class SelectComponent : IComponent
+    public class CheckboxComponent : IComponent
     {
         private readonly Input _input;
         private readonly List<Option> _selects;
@@ -19,7 +18,7 @@ namespace Prompt
         public string Result => string.Join(",", _selects.Where(i => i.Status).Select(i => i.Text));
         public bool IsCompleted { get; set; }
 
-        public SelectComponent(Input input, List<Option> selects)
+        public CheckboxComponent(Input input, List<Option> selects)
         {
             _input = input;
             _selects = selects;
@@ -122,8 +121,6 @@ namespace Prompt
             _cursorPointTop = top + 1; // offset 1 for input at the begining
             _cursorPointLeft = _range.Start.Value;
         }
-
-
 
         public int GetTopPosition()
         {

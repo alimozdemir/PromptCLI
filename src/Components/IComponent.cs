@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Prompt
+namespace PromptCLI
 {
     public interface IComponent
     {

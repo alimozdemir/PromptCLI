@@ -1,4 +1,4 @@
-namespace Prompt
+namespace PromptCLI
 {
     public class Input : ILine
     {
