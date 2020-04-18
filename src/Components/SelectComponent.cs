@@ -25,12 +25,7 @@ namespace PromptCLI
             _range = 1..2;
             _regex = "^[a-zA-Z0-9. _\b]";
         }
-
-        public void Clear()
-        {
-            Console.Clear();
-            Console.SetCursorPosition(0, 0);
-        }
+        
         public void Done()
         {
             for (int i = 0; i < _selects.Count + 1; i++)

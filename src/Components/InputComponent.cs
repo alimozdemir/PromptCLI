@@ -24,13 +24,6 @@ namespace PromptCLI
             _cursorPointLeft = _range.Start.Value;
         }
 
-        public void Clear()
-        {
-            Console.Clear();
-            Console.SetCursorPosition(0, 0);
-            
-        }
-
         public void Draw()
         {
             Console.WriteLine(_input.Text);

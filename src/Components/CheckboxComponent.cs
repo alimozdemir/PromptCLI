@@ -28,12 +28,6 @@ namespace PromptCLI
             _status = new bool[_selects.Count];
         }
 
-        public void Clear()
-        {
-            Console.Clear();
-            Console.SetCursorPosition(0, 0);
-        }
-        
 
         public void Draw()
         {
@@ -126,7 +120,7 @@ namespace PromptCLI
 
         public int GetTopPosition()
         {
-            return 1 + _selects.Count;
+            return _offsetTop;
         }
 
         public void Done()
@@ -142,7 +136,7 @@ namespace PromptCLI
 
             Console.Write(_input.Text);
             Console.Write(" > ");
-            ConsoleHelper.Write(Result.ToString(), ConsoleColor.Cyan);
+            ConsoleHelper.Write(string.Join(",", Result), ConsoleColor.Cyan);
             Console.WriteLine();
         }
     }
