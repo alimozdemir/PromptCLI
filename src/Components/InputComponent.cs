@@ -3,14 +3,10 @@ using System.Text.RegularExpressions;
 
 namespace PromptCLI
 {
-    public class InputComponent : IComponent<string>
+    public class InputComponent : ComponentBase, IComponent<string>
     {
         private readonly Input<string> _input;
-        private readonly Range _range;
-        private int _cursorPointLeft;
-        private int _cursorPointTop;
-        private string _regex;
-        public Range AvailableRange => _range;
+        public Range Range => _range;
 
         public string Result => _input.Status;
         public bool IsCompleted { get; set; }
@@ -29,34 +25,6 @@ namespace PromptCLI
             Console.WriteLine(_input.Text);
             SetPosition();
         }
-
-        private void SetPosition()
-        {
-            Console.SetCursorPosition(_cursorPointLeft, _cursorPointTop);
-        }
-
-        public void Listener()
-        {
-            ConsoleKeyInfo key;
-            do
-            {
-                key = Console.ReadKey();
-
-                Handle(key);
-            }
-            while (key.Key != ConsoleKey.Enter);
-        }
-
-        private (KeyInfo, ConsoleKey) isKeyAvailable(ConsoleKeyInfo act) =>
-            act.Key switch
-            {
-                ConsoleKey.UpArrow => (KeyInfo.Direction, act.Key),
-                ConsoleKey.DownArrow => (KeyInfo.Direction, act.Key),
-                ConsoleKey.RightArrow => (KeyInfo.Direction, act.Key),
-                ConsoleKey.LeftArrow => (KeyInfo.Direction, act.Key),
-                ConsoleKey.Backspace => (KeyInfo.Others, act.Key),
-                _ => (isThisAvailable(act.KeyChar), act.Key)
-            };
 
         public void Handle(ConsoleKeyInfo act)
         {
@@ -88,39 +56,11 @@ namespace PromptCLI
             }
         }
 
-        private void Direction(ConsoleKey key)
-        {
-            var (left, top) = (_cursorPointLeft, _cursorPointTop);
-
-            if (key == ConsoleKey.UpArrow)
-                top -= 1;
-            else if (key == ConsoleKey.DownArrow)
-                top += 1;
-
-            // bound check special
-            var isOk = leftBound(left) && topBound(top);
-            if (!isOk)
-                return;
-
-            _cursorPointLeft = left;
-            _cursorPointTop = top;
-
-            SetPosition();
-        }
-
-        private bool topBound(int top) => top >= 0 && top < 1;
-        private bool leftBound(int left) => left >= _range.Start.Value && left <= _range.End.Value;
-
-        private KeyInfo isThisAvailable(char key)
-        {
-            return Regex.Match(key.ToString(), _regex, RegexOptions.IgnoreCase).Success ?
-                KeyInfo.Others : KeyInfo.Unknown;
-        }
-
 
         public void SetTopPosition(int top)
         {
             _cursorPointTop = top;
+            _maxTop = top + 1;
         }
 
 
@@ -129,7 +69,7 @@ namespace PromptCLI
             return 1;
         }
 
-        public void Done()
+        public void Complete()
         {
         }
     }
