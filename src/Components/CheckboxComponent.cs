@@ -25,9 +25,11 @@ namespace PromptCLI
         }
 
 
-        public void Draw()
+        public void Draw(bool defaultValue = true)
         {
-            Console.WriteLine(_input.Text);
+            ConsoleHelper.Write(prefix, ConsoleColor.Green);
+            Console.Write(_input.Text);
+            Console.WriteLine();
 
             foreach(var item in _selects)
             {
@@ -58,7 +60,7 @@ namespace PromptCLI
 
             SetPosition();
             _status[index] = !_status[index];
-            Console.Write(_status[index] ? '•' : ' ');
+            ConsoleHelper.Write(_status[index] ? '•' : ' ', ConsoleColor.DarkRed);
             SetPosition();
         }
 

@@ -6,7 +6,7 @@ namespace PromptCLI
 
         public Input(string optionText)
         {
-            _text = string.Format("> {0} ", optionText);
+            _text = optionText;
         }
 
         public string Text => _text;

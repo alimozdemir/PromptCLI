@@ -7,6 +7,7 @@ namespace PromptCLI
 {
     public abstract class ComponentBase
     {
+        protected string prefix = "> ";
 
         protected int _cursorPointLeft, _offsetLeft, _maxLeft;
         protected int _cursorPointTop, _offsetTop, _maxTop;
@@ -39,8 +40,6 @@ namespace PromptCLI
 
         private bool topBound(int top) => top > _offsetTop && top < _offsetTop + _maxTop;
         private bool leftBound(int left) => left >= _range.Start.Value && left <= _range.End.Value;
-
-
 
         protected KeyInfo isThisAvailable(char key)
         {

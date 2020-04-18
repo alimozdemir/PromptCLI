@@ -10,7 +10,7 @@ namespace basics
         {
             var prompt = new Prompt();
             prompt.Add(new CheckboxComponent<int>("Which Router ?", new List<Option<int>>() { ("Vue Router", 1), ("Angular Router", 2), ("React Router", 3) }));
-            prompt.Add(new InputComponent("Project Name ?"));
+            prompt.Add(new InputComponent("Project Name ?", "Current Folder"));
             prompt.Add(new InputComponent("License ?"));
             prompt.Begin();
         }

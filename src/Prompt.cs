@@ -31,10 +31,10 @@ namespace PromptCLI
             this.Clear();
 
             ConsoleKeyInfo key;
-            while(_components.Count > 0)
+            while (_components.Count > 0)
             {
                 _currentComponent = _components.Dequeue();
-                
+
                 _currentComponent.SetTopPosition(_offsetTop);
                 _currentComponent.Draw();
                 do
@@ -52,7 +52,29 @@ namespace PromptCLI
                 Console.SetCursorPosition(0, _offsetTop);
             }
         }
-    
+
+        public void Run()
+        {
+            ConsoleKeyInfo key;
+            _currentComponent = _components.Dequeue();
+
+            _currentComponent.SetTopPosition(_offsetTop);
+            _currentComponent.Draw();
+            do
+            {
+                key = Console.ReadKey();
+
+                _currentComponent.Handle(key);
+            }
+            while (key.Key != ConsoleKey.Enter);
+
+            _currentComponent.Complete();
+
+            _offsetTop += _currentComponent.GetTopPosition();
+
+            Console.SetCursorPosition(0, _offsetTop);
+        }
+
     }
 
 }

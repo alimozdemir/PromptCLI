@@ -38,9 +38,11 @@ namespace PromptCLI
             ConsoleHelper.Write(Result.ToString(), ConsoleColor.Cyan);
             Console.WriteLine();
         }
-        public void Draw()
+        public void Draw(bool defaultValue = true)
         {
-            Console.WriteLine(_input.Text);
+            ConsoleHelper.Write(prefix, ConsoleColor.Green);
+            Console.Write(_input.Text);
+            Console.WriteLine();
 
             foreach (var item in _selects)
             {

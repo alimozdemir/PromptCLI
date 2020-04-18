@@ -17,6 +17,19 @@ namespace PromptCLI
             Console.BackgroundColor = backupBackgroudColor;
         }
 
+        public static void Write(char val, ConsoleColor textColor, Nullable<ConsoleColor> backgroundColor = null)
+        {
+            var (backupTextColor, backupBackgroudColor) = (Console.ForegroundColor, Console.BackgroundColor);
+
+            Console.ForegroundColor = textColor;
+            Console.BackgroundColor = backgroundColor ?? backupBackgroudColor;
+
+            Console.Write(val);
+
+            Console.ForegroundColor = backupTextColor;
+            Console.BackgroundColor = backupBackgroudColor;
+        }
+
         public static void Write(string val, ConsoleColor textColor, Nullable<ConsoleColor> backgroundColor = null)
         {
             var (backupTextColor, backupBackgroudColor) = (Console.ForegroundColor, Console.BackgroundColor);
@@ -44,10 +57,10 @@ namespace PromptCLI
         }
 
 
-        public static void ClearLine(int top)
+        public static void ClearLine(int top, int left = 0)
         {
-            Console.SetCursorPosition(0, top);
-            for (int i = 0; i < Console.WindowWidth; i++) 
+            Console.SetCursorPosition(left, top);
+            for (int i = left; i < Console.WindowWidth; i++) 
             {
                 Console.Write(' ');
             }
