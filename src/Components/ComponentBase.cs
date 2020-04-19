@@ -56,5 +56,12 @@ namespace PromptCLI
                 ConsoleKey.Backspace => (KeyInfo.Others, act.Key),
                 _ => (isThisAvailable(act.KeyChar), act.Key)
             };
+
+        protected void Unknown()
+        {
+            SetPosition();
+            Console.Write(' ');
+            SetPosition();
+        }
     }
 }

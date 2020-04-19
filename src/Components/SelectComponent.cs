@@ -11,15 +11,16 @@ namespace PromptCLI
         private readonly List<Option<T>> _selects;
         public Range Range => _range;
 
-        public T Result => _selects[_cursorPointTop - _offsetTop - 1].Value;
+        public T Result => _selects[_selectedIndex].Value;
         public bool IsCompleted { get; set; }
+        private int _selectedIndex = -1;
 
         public SelectComponent(Input<T> input, List<Option<T>> selects)
         {
             _input = input;
             _selects = selects;
             _range = 1..2;
-            _regex = "^[a-zA-Z0-9. _\b]";
+            _regex = "^[ ]";
         }
 
         public void Complete()
@@ -46,10 +47,10 @@ namespace PromptCLI
 
             foreach (var item in _selects)
             {
-                Console.WriteLine(item.Text);
+                Console.WriteLine("( ) {0}", item.Text);
             }
 
-            SetPosition();
+            setNew(0);
         }
 
         public void Handle(ConsoleKeyInfo act)
@@ -58,7 +59,7 @@ namespace PromptCLI
             var (result, key) = isKeyAvailable(act);
             if (result == KeyInfo.Unknown)
             {
-                SetPosition();
+                Unknown();
                 return;
             }
             else if (result == KeyInfo.Direction)
@@ -70,7 +71,28 @@ namespace PromptCLI
             var index = _cursorPointTop - _offsetTop - 1;
 
             SetPosition();
-            Console.ForegroundColor = ConsoleColor.Green;
+            clearOld();
+            setNew(index);
+        }
+
+        private void clearOld()
+        {
+            int tempTop = _cursorPointTop;
+            _cursorPointTop = _offsetTop + 1 + _selectedIndex;
+            SetPosition();
+            Console.Write(' ');
+            _cursorPointTop = tempTop;
+            SetPosition();
+        }
+
+        private void setNew(int index)
+        {
+            int tempTop = _cursorPointTop;
+            _selectedIndex = index;
+            _cursorPointTop = _offsetTop + 1 + _selectedIndex;
+            SetPosition();
+            ConsoleHelper.Write('•', ConsoleColor.DarkRed);
+            _cursorPointTop = tempTop;
             SetPosition();
         }
 
@@ -79,7 +101,7 @@ namespace PromptCLI
             _offsetTop = top;
             _cursorPointTop = top + 1; // offset 1 for input at the begining
             _cursorPointLeft = _range.Start.Value;
-            _maxTop = _offsetTop + _selects.Count + 1;
+            _maxTop = _selects.Count + 1;
         }
 
         public int GetTopPosition()

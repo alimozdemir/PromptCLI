@@ -33,7 +33,7 @@ namespace PromptCLI
 
             foreach(var item in _selects)
             {
-                Console.WriteLine("( ) {0}", item.Text);
+                Console.WriteLine("[ ] {0}", item.Text);
             }
 
             SetPosition();
@@ -45,9 +45,7 @@ namespace PromptCLI
             var (result, key) = isKeyAvailable(act);
             if (result == KeyInfo.Unknown)
             {
-                SetPosition();
-                Console.Write(' ');
-                SetPosition();
+                Unknown();
                 return;
             }
             else if (result == KeyInfo.Direction)
@@ -69,7 +67,7 @@ namespace PromptCLI
             _offsetTop = top;
             _cursorPointTop = top + 1; // offset 1 for input at the begining
             _cursorPointLeft = _range.Start.Value;
-            _maxTop = _offsetTop + _selects.Count + 1;
+            _maxTop = _selects.Count + 1;
         }
 
         public int GetTopPosition()

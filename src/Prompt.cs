@@ -7,12 +7,11 @@ namespace PromptCLI
     {
         private readonly Queue<IComponent> _components;
         private IComponent _currentComponent;
-        private int _offsetTop, _offsetLeft;
+        private int _offsetTop;
         public Prompt()
         {
             _components = new Queue<IComponent>();
             _offsetTop = 0;
-            _offsetLeft = 0;
         }
 
         public void Add(IComponent comp)
