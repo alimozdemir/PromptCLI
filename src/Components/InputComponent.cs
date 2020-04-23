@@ -46,7 +46,7 @@ namespace PromptCLI
 
         private void Reset()
         {
-            Console.ClearCurrentLine(_cursorPointTop, _cursorPointLeft);
+            Console.ClearLine(_cursorPointTop, _cursorPointLeft);
             SetPosition();
         }
 

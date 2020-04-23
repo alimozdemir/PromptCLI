@@ -6,7 +6,7 @@ namespace PromptCLI
     {
         void SetPosition(int left, int top);
         void ClearCurrentPosition(int left, int top);
-        void ClearCurrentLine(int top, int startLeft = 0);
+        void ClearLine(int top, int startLeft = 0);
         void GoBack();
         void Write(char val);
         void Write(string val);
@@ -29,7 +29,7 @@ namespace PromptCLI
         {
         }
 
-        public void ClearCurrentLine(int top, int startLeft = 0)
+        public void ClearLine(int top, int startLeft = 0)
         {
             Console.SetCursorPosition(startLeft, top);
             for (int i = startLeft; i < Console.WindowWidth; i++)

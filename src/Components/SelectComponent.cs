@@ -27,7 +27,7 @@ namespace PromptCLI
         {
             for (int i = 0; i < _selects.Count + 1; i++)
             {
-                ConsoleHelper.ClearLine(_offsetTop + i);
+                Console.ClearLine(_offsetTop + i);
             }
             
             _cursorPointLeft = 0;
@@ -36,12 +36,12 @@ namespace PromptCLI
 
             Console.Write(_input.Text);
             Console.Write(" > ");
-            ConsoleHelper.Write(Result.ToString(), ConsoleColor.Cyan);
+            Console.Write(Result.ToString(), ConsoleColor.Cyan);
             Console.WriteLine();
         }
         public void Draw(bool defaultValue = true)
         {
-            ConsoleHelper.Write(prefix, ConsoleColor.Green);
+            Console.Write(prefix, ConsoleColor.Green);
             Console.Write(_input.Text);
             Console.WriteLine();
 
@@ -91,7 +91,7 @@ namespace PromptCLI
             _selectedIndex = index;
             _cursorPointTop = _offsetTop + 1 + _selectedIndex;
             SetPosition();
-            ConsoleHelper.Write('•', ConsoleColor.DarkRed);
+            Console.Write('•', ConsoleColor.DarkRed);
             _cursorPointTop = tempTop;
             SetPosition();
         }
