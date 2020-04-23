@@ -58,7 +58,7 @@ namespace PromptCLI
 
             SetPosition();
             _status[index] = !_status[index];
-            ConsoleHelper.Write(_status[index] ? '•' : ' ', ConsoleColor.DarkRed);
+            Console.Write(_status[index] ? '•' : ' ', ConsoleColor.DarkRed);
             SetPosition();
         }
 
@@ -79,7 +79,7 @@ namespace PromptCLI
         {
             for (int i = 0; i < _selects.Count + 1; i++)
             {
-                ConsoleHelper.ClearLine(_offsetTop + i);
+                Console.ClearLine(_offsetTop + i);
             }
             
             _cursorPointLeft = 0;
@@ -88,7 +88,7 @@ namespace PromptCLI
 
             Console.Write(_input.Text);
             Console.Write(" > ");
-            ConsoleHelper.Write(string.Join(",", Result), ConsoleColor.Cyan);
+            Console.Write(string.Join(",", Result), ConsoleColor.Cyan);
             Console.WriteLine();
         }
     }
