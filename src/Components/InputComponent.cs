@@ -22,13 +22,13 @@ namespace PromptCLI
         public void Draw(bool defaultValue = true)
         {
             int startPoint = prefix.Length + _input.Text.Length + 1;
-            ConsoleHelper.Write(prefix, ConsoleColor.Green);
+            Console.Write(prefix, ConsoleColor.Green);
             Console.Write(_input.Text);
 
             if (defaultValue && !string.IsNullOrEmpty(_defaultValue))
             {
                 var format = string.Format(" ({0})", _defaultValue);
-                ConsoleHelper.Write(format, ConsoleColor.DarkGray);
+                Console.Write(format, ConsoleColor.DarkGray);
             }
 
             if (defaultValue)
@@ -46,14 +46,14 @@ namespace PromptCLI
 
         private void Reset()
         {
-            ConsoleHelper.ClearLine(_cursorPointTop, _cursorPointLeft);
+            Console.ClearCurrentLine(_cursorPointTop, _cursorPointLeft);
             SetPosition();
         }
 
         public void Handle(ConsoleKeyInfo act)
         {
             // Special for each component
-            var (result, key) = isKeyAvailable(act);
+            var (result, key) = IsKeyAvailable(act);
             if (result == KeyInfo.Unknown)
             {
                 SetPosition();
@@ -74,7 +74,7 @@ namespace PromptCLI
             if (key == ConsoleKey.Backspace)
             {
                 // Go back one character insert a space and go back again.
-                Console.Write("\b \b");
+                GoBack();
                 // Remove from status
                 _input.Status = _input.Status.Remove(_input.Status.Length - 1);
             }

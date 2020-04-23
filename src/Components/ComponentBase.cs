@@ -7,12 +7,24 @@ namespace PromptCLI
 {
     public abstract class ComponentBase
     {
-        protected string prefix = "> ";
+        private readonly IConsoleBase _console;
+        protected const string prefix = "> ";
 
         protected int _cursorPointLeft, _offsetLeft, _maxLeft;
         protected int _cursorPointTop, _offsetTop, _maxTop;
         protected string _regex;
         protected Range _range;
+
+        protected IConsoleBase Console => _console;
+
+        public ComponentBase(): this(ConsoleBase.Default)
+        {
+        }
+
+        public ComponentBase(IConsoleBase console)
+        {
+            _console = console;
+        }
 
         protected void Direction(ConsoleKey key)
         {
@@ -35,18 +47,16 @@ namespace PromptCLI
         }
         protected void SetPosition()
         {
-            Console.SetCursorPosition(_cursorPointLeft, _cursorPointTop);
+            _console.SetPosition(_cursorPointLeft, _cursorPointTop);
         }
 
         private bool topBound(int top) => top > _offsetTop && top < _offsetTop + _maxTop;
         private bool leftBound(int left) => left >= _range.Start.Value && left <= _range.End.Value;
 
-        protected KeyInfo isThisAvailable(char key)
-        {
-            return Regex.Match(key.ToString(), _regex, RegexOptions.IgnoreCase).Success ?
-                KeyInfo.Others : KeyInfo.Unknown;
-        }
-        protected (KeyInfo, ConsoleKey) isKeyAvailable(ConsoleKeyInfo act) =>
+        private KeyInfo isThisAvailable(char key) => 
+            Regex.Match(key.ToString(), _regex, RegexOptions.IgnoreCase).Success ? KeyInfo.Others : KeyInfo.Unknown;
+
+        protected (KeyInfo, ConsoleKey) IsKeyAvailable(ConsoleKeyInfo act) =>
             act.Key switch
             {
                 ConsoleKey.UpArrow => (KeyInfo.Direction, act.Key),
@@ -57,11 +67,14 @@ namespace PromptCLI
                 _ => (isThisAvailable(act.KeyChar), act.Key)
             };
 
-        protected void Unknown()
+        protected void ClearCurrentPosition()
         {
-            SetPosition();
-            Console.Write(' ');
-            SetPosition();
+            _console.ClearCurrentPosition(_cursorPointLeft, _cursorPointTop);
+        }
+
+        protected void GoBack()
+        {
+            _console.GoBack();
         }
     }
 }

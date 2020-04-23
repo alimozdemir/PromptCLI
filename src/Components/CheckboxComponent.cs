@@ -27,13 +27,13 @@ namespace PromptCLI
 
         public void Draw(bool defaultValue = true)
         {
-            ConsoleHelper.Write(prefix, ConsoleColor.Green);
+            Console.Write(prefix, ConsoleColor.Green);
             Console.Write(_input.Text);
             Console.WriteLine();
 
             foreach(var item in _selects)
             {
-                Console.WriteLine("[ ] {0}", item.Text);
+                Console.WriteLine(string.Format("[ ] {0}", item.Text));
             }
 
             SetPosition();
@@ -42,10 +42,10 @@ namespace PromptCLI
         public void Handle(ConsoleKeyInfo act)
         {
             // Special for each component
-            var (result, key) = isKeyAvailable(act);
+            var (result, key) = IsKeyAvailable(act);
             if (result == KeyInfo.Unknown)
             {
-                Unknown();
+                ClearCurrentPosition();
                 return;
             }
             else if (result == KeyInfo.Direction)

@@ -47,7 +47,7 @@ namespace PromptCLI
 
             foreach (var item in _selects)
             {
-                Console.WriteLine("( ) {0}", item.Text);
+                Console.WriteLine(string.Format("( ) {0}", item.Text));
             }
 
             setNew(0);
@@ -56,10 +56,10 @@ namespace PromptCLI
         public void Handle(ConsoleKeyInfo act)
         {
             // Special for each component
-            var (result, key) = isKeyAvailable(act);
+            var (result, key) = IsKeyAvailable(act);
             if (result == KeyInfo.Unknown)
             {
-                Unknown();
+                ClearCurrentPosition();
                 return;
             }
             else if (result == KeyInfo.Direction)
