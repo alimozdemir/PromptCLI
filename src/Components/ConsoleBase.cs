@@ -8,6 +8,7 @@ namespace PromptCLI
         void ClearCurrentPosition(int left, int top);
         void ClearLine(int top, int startLeft = 0);
         void GoBack();
+        void WritePreservePosition(char val, int left, int top, ConsoleColor? textColor = null);
         void Write(char val);
         void Write(string val);
         void Write(char val, ConsoleColor textColor, ConsoleColor? backgroundColor = null);
@@ -38,11 +39,16 @@ namespace PromptCLI
             }
         }
 
-        public void ClearCurrentPosition(int left, int top)
+        public void WritePreservePosition(char val, int left, int top, ConsoleColor? textColor = null)
         {
             SetPosition(left, top);
-            Console.Write(' ');
+            Write(val, textColor.GetValueOrDefault());
             SetPosition(left, top);
+        }
+
+        public void ClearCurrentPosition(int left, int top)
+        {
+            WritePreservePosition(' ', left, top);
         }
 
         public void SetPosition(int left, int top)

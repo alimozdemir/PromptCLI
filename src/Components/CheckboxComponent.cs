@@ -56,10 +56,9 @@ namespace PromptCLI
 
             var index = _cursorPointTop - _offsetTop - 1;
 
-            SetPosition();
             _status[index] = !_status[index];
-            Console.Write(_status[index] ? '•' : ' ', ConsoleColor.DarkRed);
-            SetPosition();
+
+            WriteCurrent(_status[index] ? '•' : ' ', ConsoleColor.DarkRed);
         }
 
         public void SetTopPosition(int top)
@@ -77,6 +76,7 @@ namespace PromptCLI
 
         public void Complete()
         {
+            // Clear all drawed lines and set the cursor into component line
             for (int i = 0; i < _selects.Count + 1; i++)
             {
                 Console.ClearLine(_offsetTop + i);
@@ -88,8 +88,7 @@ namespace PromptCLI
 
             Console.Write(_input.Text);
             Console.Write(" > ");
-            Console.Write(string.Join(",", Result), ConsoleColor.Cyan);
-            Console.WriteLine();
+            Console.WriteLine(string.Join(",", Result), ConsoleColor.Cyan);
         }
     }
 

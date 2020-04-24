@@ -106,6 +106,13 @@ namespace PromptCLI
             {
                 _input.Status = _defaultValue;
             }
+            _cursorPointLeft = 0;
+            Console.ClearLine(_cursorPointTop);
+            SetPosition();
+            
+            Console.Write(_input.Text);
+            Console.Write(" > ");
+            Console.WriteLine(_input.Status, ConsoleColor.Cyan);
         }
     }
 

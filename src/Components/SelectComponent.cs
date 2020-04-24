@@ -36,8 +36,7 @@ namespace PromptCLI
 
             Console.Write(_input.Text);
             Console.Write(" > ");
-            Console.Write(Result.ToString(), ConsoleColor.Cyan);
-            Console.WriteLine();
+            Console.WriteLine(Result.ToString(), ConsoleColor.Cyan);
         }
         public void Draw(bool defaultValue = true)
         {

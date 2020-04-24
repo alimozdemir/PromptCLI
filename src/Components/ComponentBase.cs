@@ -76,5 +76,10 @@ namespace PromptCLI
         {
             _console.GoBack();
         }
+
+        protected void WriteCurrent(char val, ConsoleColor? textColor = null)
+        {
+            _console.WritePreservePosition(val, _cursorPointLeft, _cursorPointTop, textColor);
+        }
     }
 }
