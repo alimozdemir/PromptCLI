@@ -28,8 +28,7 @@ namespace PromptCLI
         public void Draw(bool defaultValue = true)
         {
             Console.Write(prefix, ConsoleColor.Green);
-            Console.Write(_input.Text);
-            Console.WriteLine();
+            Console.WriteLine(_input.Text);
 
             foreach(var item in _selects)
             {
@@ -41,7 +40,6 @@ namespace PromptCLI
 
         public void Handle(ConsoleKeyInfo act)
         {
-            // Special for each component
             var (result, key) = IsKeyAvailable(act);
             if (result == KeyInfo.Unknown)
             {
@@ -76,7 +74,7 @@ namespace PromptCLI
 
         public void Complete()
         {
-            // Clear all drawed lines and set the cursor into component line
+            // Clear all drawed lines and set the cursor into component start position
             for (int i = 0; i < _selects.Count + 1; i++)
             {
                 Console.ClearLine(_offsetTop + i);
@@ -86,6 +84,7 @@ namespace PromptCLI
             _cursorPointTop = _offsetTop;
             SetPosition();
 
+            // Write the result
             Console.Write(_input.Text);
             Console.Write(" > ");
             Console.WriteLine(string.Join(",", Result), ConsoleColor.Cyan);

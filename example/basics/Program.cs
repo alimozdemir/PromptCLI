@@ -9,6 +9,7 @@ namespace basics
         static void Main(string[] args)
         {
             var prompt = new Prompt();
+            prompt.Add(new InputComponent("Project Name ?", "Project1"));
             prompt.Add(new CheckboxComponent<int>("Which Router ?", new List<Option<int>>() { ("Vue Router", 1), ("Angular Router", 2), ("React Router", 3) }));
             prompt.Add(new SelectComponent<int>("Which Router ?", new List<Option<int>>() { ("Vue Router", 1), ("Angular Router", 2), ("React Router", 3) }));
             prompt.Add(new InputComponent("Project Name ?"));

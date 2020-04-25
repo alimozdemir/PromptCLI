@@ -25,6 +25,7 @@ namespace PromptCLI
 
         public void Complete()
         {
+            // Clear all drawed lines and set the cursor into component start position
             for (int i = 0; i < _selects.Count + 1; i++)
             {
                 Console.ClearLine(_offsetTop + i);
@@ -34,6 +35,7 @@ namespace PromptCLI
             _cursorPointTop = _offsetTop;
             SetPosition();
 
+            // Write the result
             Console.Write(_input.Text);
             Console.Write(" > ");
             Console.WriteLine(Result.ToString(), ConsoleColor.Cyan);
@@ -41,15 +43,15 @@ namespace PromptCLI
         public void Draw(bool defaultValue = true)
         {
             Console.Write(prefix, ConsoleColor.Green);
-            Console.Write(_input.Text);
-            Console.WriteLine();
+            Console.WriteLine(_input.Text);
 
             foreach (var item in _selects)
             {
                 Console.WriteLine(string.Format("( ) {0}", item.Text));
             }
 
-            setNew(0);
+            _selectedIndex = 0;
+            toggle(0);
         }
 
         public void Handle(ConsoleKeyInfo act)
@@ -70,29 +72,26 @@ namespace PromptCLI
             var index = _cursorPointTop - _offsetTop - 1;
 
             SetPosition();
-            clearOld();
-            setNew(index);
-        }
-
-        private void clearOld()
-        {
-            int tempTop = _cursorPointTop;
-            _cursorPointTop = _offsetTop + 1 + _selectedIndex;
-            SetPosition();
-            Console.Write(' ');
-            _cursorPointTop = tempTop;
-            SetPosition();
-        }
-
-        private void setNew(int index)
-        {
-            int tempTop = _cursorPointTop;
+            toggle();
             _selectedIndex = index;
+            toggle(index);
+        }
+        private void toggle(int index = -1)
+        {
+            int tempTop = _cursorPointTop;
             _cursorPointTop = _offsetTop + 1 + _selectedIndex;
+
             SetPosition();
-            Console.Write('•', ConsoleColor.DarkRed);
+
+            if (index > -1) 
+                Console.Write('•', ConsoleColor.DarkRed);
+            else
+                Console.Write(' ');
+            
             _cursorPointTop = tempTop;
             SetPosition();
+
+            
         }
 
         public void SetTopPosition(int top)
@@ -107,8 +106,5 @@ namespace PromptCLI
         {
             return 1;
         }
-
-
     }
-
 }

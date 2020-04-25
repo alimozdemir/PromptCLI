@@ -80,11 +80,8 @@ namespace PromptCLI
             }
             else
             {
-                // SetPosition();
                 _input.Status += act.KeyChar;
-                // SetPosition();
             }
-
         }
 
 
@@ -94,7 +91,6 @@ namespace PromptCLI
             _maxTop = top + 1;
         }
 
-
         public int GetTopPosition()
         {
             return 1;
@@ -102,14 +98,17 @@ namespace PromptCLI
 
         public void Complete()
         {
+            // if no input detected, then set the result into the input.status
             if (string.IsNullOrEmpty(_input.Status) && _defaultValue != default)
             {
                 _input.Status = _defaultValue;
             }
+            // Clear the current line
             _cursorPointLeft = 0;
             Console.ClearLine(_cursorPointTop);
             SetPosition();
             
+            // Write the result
             Console.Write(_input.Text);
             Console.Write(" > ");
             Console.WriteLine(_input.Status, ConsoleColor.Cyan);
