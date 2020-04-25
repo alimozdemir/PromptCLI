@@ -74,8 +74,6 @@ namespace PromptCLI
             
             _cursorPointTop = tempTop;
             SetPosition();
-
-            
         }
 
         public void SetTopPosition(int top)
@@ -84,11 +82,6 @@ namespace PromptCLI
             _cursorPointTop = top + 1; // offset 1 for input at the begining
             _cursorPointLeft = _range.Start.Value;
             _maxTop = _selects.Count + 1;
-        }
-
-        public int GetTopPosition()
-        {
-            return 1;
         }
 
         public void Complete()
@@ -113,10 +106,9 @@ namespace PromptCLI
             CallbackAction?.Invoke(this.Result);
         }
 
-        public void Bind(Prompt prompt)
-        {
-            _prompt = prompt;
-        }
+        public int GetTopPosition() => 1;
+
+        public void Bind(Prompt prompt) => _prompt = prompt;
 
         public Prompt Callback(Action<Input<T>> callback)
         {

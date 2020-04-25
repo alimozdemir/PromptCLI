@@ -92,11 +92,6 @@ namespace PromptCLI
             _maxTop = top + 1;
         }
 
-        public int GetTopPosition()
-        {
-            return 1;
-        }
-
         public void Complete()
         {
             // if no input detected, then set the result into the input.status
@@ -117,10 +112,9 @@ namespace PromptCLI
             CallbackAction?.Invoke(this.Result);
         }
 
-        public void Bind(Prompt prompt)
-        {
-            _prompt = prompt;
-        }
+        public int GetTopPosition() => 1;
+
+        public void Bind(Prompt prompt) => _prompt = prompt;
 
         public Prompt Callback(Action<Input<string>> callback)
         {

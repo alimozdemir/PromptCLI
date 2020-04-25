@@ -46,10 +46,7 @@ namespace PromptCLI
 
             SetPosition();
         }
-        protected void SetPosition()
-        {
-            _console.SetPosition(_cursorPointLeft, _cursorPointTop);
-        }
+        protected void SetPosition() => _console.SetPosition(_cursorPointLeft, _cursorPointTop);
 
         private bool topBound(int top) => top > _offsetTop && top < _offsetTop + _maxTop;
         private bool leftBound(int left) => left >= _range.Start.Value && left <= _range.End.Value;
@@ -68,19 +65,10 @@ namespace PromptCLI
                 _ => (isThisAvailable(act.KeyChar), act.Key)
             };
 
-        protected void ClearCurrentPosition()
-        {
-            _console.ClearCurrentPosition(_cursorPointLeft, _cursorPointTop);
-        }
+        protected void ClearCurrentPosition() => _console.ClearCurrentPosition(_cursorPointLeft, _cursorPointTop);
 
-        protected void GoBack()
-        {
-            _console.GoBack();
-        }
+        protected void GoBack() => _console.GoBack();
 
-        protected void WriteCurrent(char val, ConsoleColor? textColor = null)
-        {
-            _console.WritePreservePosition(val, _cursorPointLeft, _cursorPointTop, textColor);
-        }
+        protected void WriteCurrent(char val, ConsoleColor? textColor = null) => _console.WritePreservePosition(val, _cursorPointLeft, _cursorPointTop, textColor);
     }
 }

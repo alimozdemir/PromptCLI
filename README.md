@@ -15,7 +15,7 @@ prompt.Add(new InputComponent("Description"));
 prompt.Begin();
 ```
 
-## With callback action
+## Callback Action
 
 You can handle callback action after each step
 
@@ -42,4 +42,4 @@ prompt.Begin();
 
 # Contributions
 
-All contributions are welcome if described well.
+All contributions are welcome if well described.

@@ -69,10 +69,7 @@ namespace PromptCLI
             _maxTop = _selects.Count + 1;
         }
 
-        public int GetTopPosition()
-        {
-            return 1;
-        }
+        public int GetTopPosition() => 1;
 
         public void Complete()
         {
@@ -95,10 +92,7 @@ namespace PromptCLI
             CallbackAction?.Invoke(this.Result);
         }
 
-        public void Bind(Prompt prompt)
-        {
-            _prompt = prompt;
-        }
+        public void Bind(Prompt prompt) => _prompt = prompt;
 
         public Prompt Callback(Action<Input<IEnumerable<T>>> callback)
         {
