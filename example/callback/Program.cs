@@ -31,13 +31,12 @@ namespace callback
                 .Add(new CheckboxComponent<string>("Features", new List<string>() { "Linter", "Router", "Other" }))
                 .Callback(i => project.Features = i.Status)
                 .Add(new InputComponent("Description"))
-                .Callback(i => project.Description = i.Text);
+                .Callback(i => project.Description = i.Status);
             prompt.Begin();
 
             Console.WriteLine();
             Console.WriteLine("***** The result *****");
             Console.WriteLine(project);
-
         }
     }
 }

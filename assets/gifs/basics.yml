@@ -1,0 +1,209 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: bash -l
+  
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /Users/alimozdemir/Documents/Work/self/PromptCLI/example/basics
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 80
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 24
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+  
+  # Quality
+  # 1 - 100
+  quality: 100
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  frameDelay: auto
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: floating
+    title: Terminalizer
+    style:
+      border: 0px black solid
+      # boxShadow: none
+      # margin: 0px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: null
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 12
+  
+  # The height of lines
+  lineHeight: 1
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 1
+    content: "\r\n"
+  - delay: 200
+    content: "\e[?1h\e="
+  - delay: 100
+    content: "\e[H\e[2J\e[1;1H\e[39;49m\e[92m\e[39;49m\e[92m> \e[39;49m\e[39;49mProject Name\e[39;49m\e[90m\e[39;49m\e[90m (Project1)\e[39;49m\e[39;49m\r\n\e[1;16H"
+  - delay: 5
+    content: "\e[?1h\e="
+  - delay: 700
+    content: P
+  - delay: 44
+    content: "                                                                \e[1;17H"
+  - delay: 84
+    content: r
+  - delay: 109
+    content: o
+  - delay: 205
+    content: j
+  - delay: 136
+    content: e
+  - delay: 217
+    content: c
+  - delay: 202
+    content: t
+  - delay: 123
+    content: ' '
+  - delay: 248
+    content: 'N'
+  - delay: 127
+    content: a
+  - delay: 117
+    content: m
+  - delay: 121
+    content: e
+  - delay: 221
+    content: "\r\e[1;17H\e[1;1H                                                                                \e[1;1HProject Name > \e[39;49m\e[96m\e[39;49m\e[96mProject Name\r\n\e[39;49m\e[39;49m\e[2;1H\e[39;49m\e[92m\e[39;49m\e[92m> \e[39;49m\e[39;49mLicense Type\r\n( ) MIT\r\n( ) Apache\r\n( ) GNU\r\n\e[3;2H\e[39;49m\e[31m\e[39;49m\e[31m•\e[39;49m\e[39;49m\e[3;2H"
+  - delay: 700
+    content: "\e[4;2H"
+  - delay: 245
+    content: "\e[5;2H"
+  - delay: 700
+    content: " \e[5;2H\e[3;2H \e[5;2H\e[39;49m\e[31m\e[39;49m\e[31m•\e[39;49m\e[39;49m\e[5;2H"
+  - delay: 828
+    content: "\r\e[5;2H\e[39;49m\e[30m\e[39;49m\e[30m \e[39;49m\e[39;49m\e[5;2H\e[2;1H                                                                                                                                                                                                                                                                                                                                \e[2;1HLicense Type > \e[39;49m\e[96m\e[39;49m\e[96mGNU\r\n\e[39;49m\e[39;49m\e[3;1H\e[39;49m\e[92m\e[39;49m\e[92m> \e[39;49m\e[39;49mFeatures\r\n[ ] Linter\r\n[ ] Router\r\n[ ] Other\r\n\e[4;2H"
+  - delay: 700
+    content: " \e[4;2H\e[39;49m\e[31m\e[39;49m\e[31m•\e[39;49m\e[39;49m\e[4;2H"
+  - delay: 191
+    content: "\e[5;2H"
+  - delay: 288
+    content: " \e[5;2H\e[39;49m\e[31m\e[39;49m\e[31m•\e[39;49m\e[39;49m\e[5;2H"
+  - delay: 550
+    content: "\r\e[5;2H\e[39;49m\e[30m\e[39;49m\e[30m \e[39;49m\e[39;49m\e[5;2H"
+  - delay: 19
+    content: "\e[3;1H                                                                                                                                                                                                                                                                                                                                \e[3;1HFeatures > \e[39;49m\e[96m\e[39;49m\e[96mLinter,Router\r\n\e[39;49m\e[39;49m\e[4;1H\e[39;49m\e[92m\e[39;49m\e[92m> \e[39;49m\e[39;49mDescription\r\n\e[4;15H"
+  - delay: 700
+    content: P
+  - delay: 163
+    content: r
+  - delay: 108
+    content: o
+  - delay: 206
+    content: j
+  - delay: 77
+    content: e
+  - delay: 208
+    content: c
+  - delay: 195
+    content: t
+  - delay: 143
+    content: ' '
+  - delay: 252
+    content: d
+  - delay: 190
+    content: e
+  - delay: 95
+    content: s
+  - delay: 212
+    content: c
+  - delay: 288
+    content: r
+  - delay: 172
+    content: i
+  - delay: 270
+    content: p
+  - delay: 154
+    content: t
+  - delay: 148
+    content: i
+  - delay: 193
+    content: o
+  - delay: 82
+    content: 'n'
+  - delay: 700
+    content: "\r\e[4;15H\e[4;1H                                                                                \e[4;1HDescription > \e[39;49m\e[96m\e[39;49m\e[96mProject description\r\n\e[39;49m\e[39;49m\e[5;1H"
+  - delay: 13
+    content: "\e[?1h\e="
