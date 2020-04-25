@@ -13,4 +13,28 @@ prompt.Add(new InputComponent("Description"));
 prompt.Begin();
 ```
 
-# Advanced
+## With callback action
+
+
+```csharp
+var project = new Project();
+
+var prompt = new Prompt();
+prompt.Add(new InputComponent("Project Name", "Project1"))
+    .Callback(i => project.ProjectName = i.Status)
+    .Add(new SelectComponent<string>("License Type", new List<string>() { "MIT", "Apache", "GNU" } ))
+    .Callback(i => project.License = i.Status)
+    .Add(new CheckboxComponent<string>("Features", new List<string>() { "Linter", "Router", "Other" }))
+    .Callback(i => project.Features = i.Status)
+    .Add(new InputComponent("Description"))
+    .Callback(i => project.Description = i.Text);
+prompt.Begin();
+```
+
+# Todo
+
+- Define data attributes for specify the components
+- Fullfil the POCO class with right components
+
+
+# Contributions

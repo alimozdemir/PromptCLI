@@ -10,7 +10,7 @@ namespace PromptCLI
 
         public Action<Input<string>> CallbackAction { get; private set; }
         public Range Range => _range;
-        public Input<string> Result => _input.Status;
+        public Input<string> Result => _input;
         public bool IsCompleted { get; set; }
 
         public InputComponent(Input<string> input, string defaultValue = default)
@@ -100,7 +100,7 @@ namespace PromptCLI
         public void Complete()
         {
             // if no input detected, then set the result into the input.status
-            if (string.IsNullOrEmpty(_input.Status) && _defaultValue != default)
+            if (string.IsNullOrEmpty(_input.Status) && !string.IsNullOrEmpty(_defaultValue))
             {
                 _input.Status = _defaultValue;
             }
