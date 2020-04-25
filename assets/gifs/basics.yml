@@ -18,12 +18,12 @@ config:
   # Explicitly set the number of columns
   # or use `auto` to take the current
   # number of columns of your shell
-  cols: 80
+  cols: 60
   
   # Explicitly set the number of rows
   # or use `auto` to take the current
   # number of rows of your shell
-  rows: 24
+  rows: 8
   
   # Amount of times to repeat GIF
   # If value is -1, play once
@@ -49,8 +49,8 @@ config:
   # To hide the title use the value null
   # Don't forget to add a backgroundColor style with a null as type
   frameBox:
-    type: floating
-    title: Terminalizer
+    type: solid
+    title: null
     style:
       border: 0px black solid
       # boxShadow: none
@@ -206,4 +206,6 @@ records:
   - delay: 700
     content: "\r\e[4;15H\e[4;1H                                                                                \e[4;1HDescription > \e[39;49m\e[96m\e[39;49m\e[96mProject description\r\n\e[39;49m\e[39;49m\e[5;1H"
   - delay: 13
+    content: "\e[?1h\e="
+  - delay: 200
     content: "\e[?1h\e="
