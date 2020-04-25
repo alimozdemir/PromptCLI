@@ -11,7 +11,8 @@ namespace PromptCLI
         private readonly List<Option<T>> _selects;
         public Range Range => _range;
 
-        public T Result => _selects[_selectedIndex].Value;
+        public Action<Input<T>> CallbackAction { get; private set; }
+        public Input<T> Result => _input; // _selects[_selectedIndex].Value;
         public bool IsCompleted { get; set; }
         private int _selectedIndex = -1;
 
@@ -23,23 +24,6 @@ namespace PromptCLI
             _regex = "^[ ]";
         }
 
-        public void Complete()
-        {
-            // Clear all drawed lines and set the cursor into component start position
-            for (int i = 0; i < _selects.Count + 1; i++)
-            {
-                Console.ClearLine(_offsetTop + i);
-            }
-            
-            _cursorPointLeft = 0;
-            _cursorPointTop = _offsetTop;
-            SetPosition();
-
-            // Write the result
-            Console.Write(_input.Text);
-            Console.Write(" > ");
-            Console.WriteLine(Result.ToString(), ConsoleColor.Cyan);
-        }
         public void Draw(bool defaultValue = true)
         {
             Console.Write(prefix, ConsoleColor.Green);
@@ -105,6 +89,39 @@ namespace PromptCLI
         public int GetTopPosition()
         {
             return 1;
+        }
+
+        public void Complete()
+        {
+            _input.Status = _selects[_selectedIndex].Value;
+
+            // Clear all drawed lines and set the cursor into component start position
+            for (int i = 0; i < _selects.Count + 1; i++)
+            {
+                Console.ClearLine(_offsetTop + i);
+            }
+            
+            _cursorPointLeft = 0;
+            _cursorPointTop = _offsetTop;
+            SetPosition();
+
+            // Write the result
+            Console.Write(_input.Text);
+            Console.Write(" > ");
+            Console.WriteLine(Result.ToString(), ConsoleColor.Cyan);
+
+            CallbackAction(this.Result);
+        }
+        
+        public void Bind(Prompt prompt)
+        {
+            _prompt = prompt;
+        }
+
+        public Prompt Callback(Action<Input<T>> callback)
+        {
+            CallbackAction = callback;
+            return _prompt;
         }
     }
 }

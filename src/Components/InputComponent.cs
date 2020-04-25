@@ -8,8 +8,9 @@ namespace PromptCLI
         private readonly string _defaultValue;
         private readonly Input<string> _input;
 
+        public Action<Input<string>> CallbackAction { get; private set; }
         public Range Range => _range;
-        public string Result => _input.Status;
+        public Input<string> Result => _input.Status;
         public bool IsCompleted { get; set; }
 
         public InputComponent(Input<string> input, string defaultValue = default)
@@ -108,10 +109,24 @@ namespace PromptCLI
             Console.ClearLine(_cursorPointTop);
             SetPosition();
             
-            // Write the result
+            // Write the result 
             Console.Write(_input.Text);
             Console.Write(" > ");
             Console.WriteLine(_input.Status, ConsoleColor.Cyan);
+
+
+            CallbackAction(this.Result);
+        }
+
+        public void Bind(Prompt prompt)
+        {
+            _prompt = prompt;
+        }
+
+        public Prompt Callback(Action<Input<string>> callback)
+        {
+            CallbackAction = callback;
+            return _prompt;
         }
     }
 

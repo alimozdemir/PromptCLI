@@ -14,9 +14,11 @@ namespace PromptCLI
             _offsetTop = 0;
         }
 
-        public void Add(IComponent comp)
+        public IComponentPrompt<T> Add<T>(IComponent<T> comp)
         {
+            comp.Bind(this);
             _components.Enqueue(comp);
+            return comp;
         }
 
         private void Clear()
@@ -50,28 +52,6 @@ namespace PromptCLI
 
                 Console.SetCursorPosition(0, _offsetTop);
             }
-        }
-
-        public void Run()
-        {
-            ConsoleKeyInfo key;
-            _currentComponent = _components.Dequeue();
-
-            _currentComponent.SetTopPosition(_offsetTop);
-            _currentComponent.Draw();
-            do
-            {
-                key = Console.ReadKey();
-
-                _currentComponent.Handle(key);
-            }
-            while (key.Key != ConsoleKey.Enter);
-
-            _currentComponent.Complete();
-
-            _offsetTop += _currentComponent.GetTopPosition();
-
-            Console.SetCursorPosition(0, _offsetTop);
         }
 
     }

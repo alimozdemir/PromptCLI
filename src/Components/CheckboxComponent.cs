@@ -10,9 +10,11 @@ namespace PromptCLI
         private readonly Input<IEnumerable<T>> _input;
         private readonly List<Option<T>> _selects;
         private readonly bool[] _status;
+        public Action<Input<IEnumerable<T>>> CallbackAction { get; private set; }
+
         public Range Range => _range;
 
-        public IEnumerable<T> Result => _status.Where(i => i).Select((i, index) => _selects[index].Value);
+        public Input<IEnumerable<T>> Result => _input;
         public bool IsCompleted { get; set; }
 
         public CheckboxComponent(Input<IEnumerable<T>> input, List<Option<T>> selects)
@@ -88,6 +90,19 @@ namespace PromptCLI
             Console.Write(_input.Text);
             Console.Write(" > ");
             Console.WriteLine(string.Join(",", Result), ConsoleColor.Cyan);
+
+            CallbackAction(this.Result);
+        }
+
+        public void Bind(Prompt prompt)
+        {
+            _prompt = prompt;
+        }
+
+        public Prompt Callback(Action<Input<IEnumerable<T>>> callback)
+        {
+            CallbackAction = callback;
+            return _prompt;
         }
     }
 
