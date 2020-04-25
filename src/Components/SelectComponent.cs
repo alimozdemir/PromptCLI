@@ -8,7 +8,7 @@ namespace PromptCLI
     public class SelectComponent<T> : ComponentBase, IComponent<T>
     {
         private readonly Input<T> _input;
-        private readonly List<Option<T>> _selects;
+        private readonly List<T> _selects;
         public Range Range => _range;
 
         public Action<Input<T>> CallbackAction { get; private set; }
@@ -16,7 +16,7 @@ namespace PromptCLI
         public bool IsCompleted { get; set; }
         private int _selectedIndex = -1;
 
-        public SelectComponent(Input<T> input, List<Option<T>> selects)
+        public SelectComponent(Input<T> input, List<T> selects)
         {
             _input = input;
             _selects = selects;
@@ -31,7 +31,7 @@ namespace PromptCLI
 
             foreach (var item in _selects)
             {
-                Console.WriteLine(string.Format("( ) {0}", item.Text));
+                Console.WriteLine(string.Format("( ) {0}", item));
             }
 
             _selectedIndex = 0;
@@ -93,7 +93,7 @@ namespace PromptCLI
 
         public void Complete()
         {
-            _input.Status = _selects[_selectedIndex].Value;
+            _input.Status = _selects[_selectedIndex];
 
             // Clear all drawed lines and set the cursor into component start position
             for (int i = 0; i < _selects.Count + 1; i++)
@@ -108,11 +108,11 @@ namespace PromptCLI
             // Write the result
             Console.Write(_input.Text);
             Console.Write(" > ");
-            Console.WriteLine(Result.ToString(), ConsoleColor.Cyan);
+            Console.WriteLine(Result.Status.ToString(), ConsoleColor.Cyan);
 
-            CallbackAction(this.Result);
+            CallbackAction?.Invoke(this.Result);
         }
-        
+
         public void Bind(Prompt prompt)
         {
             _prompt = prompt;

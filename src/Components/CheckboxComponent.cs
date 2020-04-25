@@ -8,7 +8,7 @@ namespace PromptCLI
     public class CheckboxComponent<T> : ComponentBase, IComponent<IEnumerable<T>>
     {
         private readonly Input<IEnumerable<T>> _input;
-        private readonly List<Option<T>> _selects;
+        private readonly List<T> _selects;
         private readonly bool[] _status;
         public Action<Input<IEnumerable<T>>> CallbackAction { get; private set; }
 
@@ -17,7 +17,7 @@ namespace PromptCLI
         public Input<IEnumerable<T>> Result => _input;
         public bool IsCompleted { get; set; }
 
-        public CheckboxComponent(Input<IEnumerable<T>> input, List<Option<T>> selects)
+        public CheckboxComponent(Input<IEnumerable<T>> input, List<T> selects)
         {
             _input = input;
             _selects = selects;
@@ -34,7 +34,7 @@ namespace PromptCLI
 
             foreach(var item in _selects)
             {
-                Console.WriteLine(string.Format("[ ] {0}", item.Text));
+                Console.WriteLine(string.Format("[ ] {0}", item));
             }
 
             SetPosition();
@@ -76,6 +76,7 @@ namespace PromptCLI
 
         public void Complete()
         {
+            _input.Status = _status.Select((i, index) => (status:i, index)).Where(i => i.status).Select(i => _selects[i.index]);
             // Clear all drawed lines and set the cursor into component start position
             for (int i = 0; i < _selects.Count + 1; i++)
             {
@@ -89,9 +90,9 @@ namespace PromptCLI
             // Write the result
             Console.Write(_input.Text);
             Console.Write(" > ");
-            Console.WriteLine(string.Join(",", Result), ConsoleColor.Cyan);
+            Console.WriteLine(string.Join(",", Result.Status), ConsoleColor.Cyan);
 
-            CallbackAction(this.Result);
+            CallbackAction?.Invoke(this.Result);
         }
 
         public void Bind(Prompt prompt)

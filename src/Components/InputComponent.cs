@@ -114,8 +114,7 @@ namespace PromptCLI
             Console.Write(" > ");
             Console.WriteLine(_input.Status, ConsoleColor.Cyan);
 
-
-            CallbackAction(this.Result);
+            CallbackAction?.Invoke(this.Result);
         }
 
         public void Bind(Prompt prompt)
