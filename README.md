@@ -1,5 +1,7 @@
 # PromptCLI
 
+![Nuget](https://img.shields.io/nuget/v/PromptCLI)
+
 PromptCLI is inspired from inquirer.js and enquirer.js. It is a interactive command line interface library.
 
 ![Basics](https://github.com/lyzerk/PromptCLI/raw/master/assets/gifs/basics.gif "Basics")

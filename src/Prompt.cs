@@ -30,7 +30,6 @@ namespace PromptCLI
         public void Begin()
         {
             this.Clear();
-
             ConsoleKeyInfo key;
             while (_components.Count > 0)
             {
