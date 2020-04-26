@@ -9,9 +9,10 @@
     <Description>PromptCLI is inspired from inquirer.js and enquirer.js. It is a interactive command line interface library.</Description>
     <Copyright>Copyright © 2020 Alim Özdemir</Copyright>
     <RepositoryUrl>https://github.com/lyzerk/PromptCLI</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/lyzerk/PromptCLI</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/lyzerk/PromptCLI/master/LICENSE</PackageLicenseUrl>
     <LangVersion>latest</LangVersion>
-    <IconUrl>https://raw.githubusercontent.com/lyzerk/PromptCLI/master/assets/icon.png</IconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/lyzerk/PromptCLI/master/assets/icon.png</PackageIconUrl>
   </PropertyGroup>
 
 </Project>
