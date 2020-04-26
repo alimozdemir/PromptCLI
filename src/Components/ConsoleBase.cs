@@ -63,44 +63,32 @@ namespace PromptCLI
             // Go back one character insert a space and go back again.
             Console.Write(_goBackConst);
         }
-
-        public void Write(char val, ConsoleColor textColor, ConsoleColor? backgroundColor = null)
+        private void Compose(Action f, ConsoleColor textColor, ConsoleColor? backgroundColor = null)
         {
             var (backupTextColor, backupBackgroudColor) = (Console.ForegroundColor, Console.BackgroundColor);
 
             Console.ForegroundColor = textColor;
             Console.BackgroundColor = backgroundColor ?? backupBackgroudColor;
 
-            Console.Write(val);
+            f();
 
             Console.ForegroundColor = backupTextColor;
             Console.BackgroundColor = backupBackgroudColor;
+        }
+
+        public void Write(char val, ConsoleColor textColor, ConsoleColor? backgroundColor = null)
+        {
+            Compose(() => Console.Write(val), textColor, backgroundColor);
         }
 
         public void Write(string val, ConsoleColor textColor, ConsoleColor? backgroundColor = null)
         {
-            var (backupTextColor, backupBackgroudColor) = (Console.ForegroundColor, Console.BackgroundColor);
-
-            Console.ForegroundColor = textColor;
-            Console.BackgroundColor = backgroundColor ?? backupBackgroudColor;
-
-            Console.Write(val);
-
-            Console.ForegroundColor = backupTextColor;
-            Console.BackgroundColor = backupBackgroudColor;
+            Compose(() => Console.Write(val), textColor, backgroundColor);
         }
 
         public void WriteLine(string val, ConsoleColor textColor, ConsoleColor? backgroundColor = null)
         {
-            var (backupTextColor, backupBackgroudColor) = (Console.ForegroundColor, Console.BackgroundColor);
-
-            Console.ForegroundColor = textColor;
-            Console.BackgroundColor = backgroundColor ?? backupBackgroudColor;
-
-            Console.WriteLine(val);
-
-            Console.ForegroundColor = backupTextColor;
-            Console.BackgroundColor = backupBackgroudColor;
+            Compose(() => Console.WriteLine(val), textColor, backgroundColor);
         }
 
         public void WriteLine()
@@ -113,12 +101,10 @@ namespace PromptCLI
             Console.Write(val);
         }
 
-
         public void Write(string val)
         {
             Console.Write(val);
         }
-
 
         public void WriteLine(string val)
         {

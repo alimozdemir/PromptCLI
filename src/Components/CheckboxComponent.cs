@@ -17,13 +17,20 @@ namespace PromptCLI
         public Input<IEnumerable<T>> Result => _input;
         public bool IsCompleted { get; set; }
 
-        public CheckboxComponent(Input<IEnumerable<T>> input, List<T> selects)
+
+        public CheckboxComponent(Input<IEnumerable<T>> input, List<T> selects, IConsoleBase console) 
+            : base(console)
         {
             _input = input;
             _selects = selects;
             _range = 1..2;
             _regex = "^[ ]";
             _status = new bool[_selects.Count];
+        }
+
+        public CheckboxComponent(Input<IEnumerable<T>> input, List<T> selects)
+            :this(input, selects, ConsoleBase.Default)
+        {
         }
 
 

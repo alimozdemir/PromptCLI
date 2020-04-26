@@ -13,11 +13,17 @@ namespace PromptCLI
         public Input<string> Result => _input;
         public bool IsCompleted { get; set; }
 
-        public InputComponent(Input<string> input, string defaultValue = default)
+        public InputComponent(Input<string> input, IConsoleBase console,  string defaultValue = default)
+            :base(console)
         {
             _defaultValue = defaultValue;
             _input = input;
             _regex = "^[a-zA-Z0-9. _\b]";
+        }
+
+        public InputComponent(Input<string> input, string defaultValue = default)
+            :this(input, ConsoleBase.Default, defaultValue)
+        {
         }
 
         public void Draw(bool defaultValue = true)

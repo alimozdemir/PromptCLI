@@ -16,12 +16,18 @@ namespace PromptCLI
         public bool IsCompleted { get; set; }
         private int _selectedIndex = -1;
 
-        public SelectComponent(Input<T> input, List<T> selects)
+        public SelectComponent(Input<T> input, List<T> selects, IConsoleBase console)
+            : base(console)
         {
             _input = input;
             _selects = selects;
             _range = 1..2;
             _regex = "^[ ]";
+        }
+
+        public SelectComponent(Input<T> input, List<T> selects)
+            : this(input, selects, ConsoleBase.Default)
+        {
         }
 
         public void Draw(bool defaultValue = true)
