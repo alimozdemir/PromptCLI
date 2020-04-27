@@ -30,6 +30,11 @@ steps:
     projects: 'tests/*.csproj'
     feedsToUse: 'select'
   displayName: 'dotnet test restore'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: test
+    projects: 'tests/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
   inputs:
