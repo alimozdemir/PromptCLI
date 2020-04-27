@@ -1,6 +1,6 @@
 # PromptCLI
 
-![Nuget](https://img.shields.io/nuget/v/PromptCLI) ![Azure DevOps builds](https://img.shields.io/azure-devops/build/almozdmr/PromptCLI/1)
+![Nuget](https://img.shields.io/nuget/v/PromptCLI) [![Azure DevOps builds](https://img.shields.io/azure-devops/build/almozdmr/PromptCLI/1)](https://dev.azure.com/almozdmr/PromptCLI/_build?definitionId=1&_a=summary) ![Coverage](https://img.shields.io/azure-devops/coverage/almozdmr/PromptCLI/1)
 
 PromptCLI is inspired from inquirer.js and enquirer.js. It is a interactive command line interface library.
 
