@@ -16,17 +16,27 @@ steps:
     command: 'restore'
     projects: 'src/*.csproj'
     feedsToUse: 'select'
+  displayName: 'dotnet restore'
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
     projects: 'src/*.csproj'
+  displayName: 'dotnet build'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'restore'
+    projects: 'tests/*.csproj'
+    feedsToUse: 'select'
+  displayName: 'dotnet test restore'
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'test'
     projects: 'tests/*.csproj'
     arguments: '/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=TestResults/Coverage/'
+  displayName: 'run test'
 
 - script: dotnet reportgenerator "-reports:$(Build.SourcesDirectory)/TestResults/Coverage/coverage.cobertura.xml" "-targetDir:$(Build.SourcesDirectory)/TestResults/Coverage/Reports" -tag:$(Build.BuildNumber) -reportTypes:htmlInline
   workingDirectory: $(Build.SourcesDirectory)/tests
