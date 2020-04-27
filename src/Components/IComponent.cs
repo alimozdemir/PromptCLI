@@ -7,6 +7,8 @@ namespace PromptCLI
     public interface IComponent
     {
         bool IsCompleted { get; set; }
+        int CursorTop { get; }
+        int CursorLeft { get; }
         void Handle(ConsoleKeyInfo act);
         void Draw(bool defaultValue = true);
         void SetTopPosition(int top);
