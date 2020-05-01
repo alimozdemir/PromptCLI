@@ -8,6 +8,7 @@ namespace PromptCLI
         private readonly string _defaultValue;
         private readonly Input<string> _input;
 
+        public ComponentType ComponentType => ComponentType.Input;
         public Action<Input<string>> CallbackAction { get; private set; }
         public Range Range => _range;
         public Input<string> Result => _input;

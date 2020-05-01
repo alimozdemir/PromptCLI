@@ -4,8 +4,15 @@ using System;
 
 namespace PromptCLI
 {
+    public enum ComponentType
+    {
+        Input,
+        Checkbox,
+        Select
+    }
     public interface IComponent
     {
+        ComponentType ComponentType { get; }
         bool IsCompleted { get; set; }
         int CursorTop { get; }
         int CursorLeft { get; }

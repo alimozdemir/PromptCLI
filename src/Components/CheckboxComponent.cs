@@ -10,6 +10,7 @@ namespace PromptCLI
         private readonly Input<IEnumerable<T>> _input;
         private readonly List<T> _selects;
         private readonly bool[] _status;
+        public ComponentType ComponentType => ComponentType.Checkbox;
         public Action<Input<IEnumerable<T>>> CallbackAction { get; private set; }
 
         public Range Range => _range;

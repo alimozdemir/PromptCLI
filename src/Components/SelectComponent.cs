@@ -11,6 +11,7 @@ namespace PromptCLI
         private readonly IList<T> _selects;
         public Range Range => _range;
 
+        public ComponentType ComponentType => ComponentType.Select;
         public Action<Input<T>> CallbackAction { get; private set; }
         public Input<T> Result => _input; // _selects[_selectedIndex].Value;
         public bool IsCompleted { get; set; }
