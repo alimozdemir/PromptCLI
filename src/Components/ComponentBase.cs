@@ -14,7 +14,7 @@ namespace PromptCLI
         protected int _cursorPointTop, _offsetTop, _maxTop;
         protected string _regex;
         protected Range _range;
-        protected Prompt _prompt;
+        protected IPrompt _prompt;
 
         protected IConsoleBase Console => _console;
 

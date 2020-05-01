@@ -99,9 +99,9 @@ namespace PromptCLI
             CallbackAction?.Invoke(this.Result);
         }
 
-        public void Bind(Prompt prompt) => _prompt = prompt;
+        public void Bind(IPrompt prompt) => _prompt = prompt;
 
-        public Prompt Callback(Action<Input<IEnumerable<T>>> callback)
+        public IPrompt Callback(Action<Input<IEnumerable<T>>> callback)
         {
             CallbackAction = callback;
             return _prompt;

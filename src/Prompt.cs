@@ -3,7 +3,13 @@ using System.Collections.Generic;
 
 namespace PromptCLI
 {
-    public class Prompt
+    public interface IPrompt
+    {
+        IComponentPrompt<T> Add<T>(IComponent<T> comp);
+        void Begin();
+    }
+
+    public class Prompt : IPrompt
     {
         private readonly Queue<IComponent> _components;
         private IComponent _currentComponent;

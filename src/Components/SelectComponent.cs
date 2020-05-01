@@ -116,9 +116,9 @@ namespace PromptCLI
 
         public int GetTopPosition() => 1;
 
-        public void Bind(Prompt prompt) => _prompt = prompt;
+        public void Bind(IPrompt prompt) => _prompt = prompt;
 
-        public Prompt Callback(Action<Input<T>> callback)
+        public IPrompt Callback(Action<Input<T>> callback)
         {
             CallbackAction = callback;
             return _prompt;
