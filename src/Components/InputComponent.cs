@@ -38,9 +38,6 @@ namespace PromptCLI
                 Console.Write(format, ConsoleColor.DarkGray);
             }
 
-            if (defaultValue)
-                Console.WriteLine();
-
             _range = startPoint..;
             ResetCursorToBegining();
         }

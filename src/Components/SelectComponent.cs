@@ -8,7 +8,7 @@ namespace PromptCLI
     public class SelectComponent<T> : ComponentBase, IComponent<T>
     {
         private readonly Input<T> _input;
-        private readonly List<T> _selects;
+        private readonly IList<T> _selects;
         public Range Range => _range;
 
         public Action<Input<T>> CallbackAction { get; private set; }
@@ -16,7 +16,7 @@ namespace PromptCLI
         public bool IsCompleted { get; set; }
         private int _selectedIndex = -1;
 
-        public SelectComponent(Input<T> input, List<T> selects, IConsoleBase console)
+        public SelectComponent(Input<T> input, IList<T> selects, IConsoleBase console)
             : base(console)
         {
             _input = input;
@@ -40,13 +40,17 @@ namespace PromptCLI
                 Console.WriteLine(string.Format("( ) {0}", item));
             }
 
-            _selectedIndex = 0;
+            ChangeSelected(0);
             toggle(0);
         }
 
+        private void ChangeSelected(int index)
+        {
+            _selectedIndex = index;
+            _input.Status = _selects[_selectedIndex];
+        }
         public void Handle(ConsoleKeyInfo act)
         {
-            // Special for each component
             var (result, key) = IsKeyAvailable(act);
             if (result == KeyInfo.Unknown)
             {
@@ -63,7 +67,7 @@ namespace PromptCLI
 
             SetPosition();
             toggle();
-            _selectedIndex = index;
+            ChangeSelected(index);
             toggle(index);
         }
         private void toggle(int index = -1)
@@ -92,8 +96,6 @@ namespace PromptCLI
 
         public void Complete()
         {
-            _input.Status = _selects[_selectedIndex];
-
             // Clear all drawed lines and set the cursor into component start position
             for (int i = 0; i < _selects.Count + 1; i++)
             {
