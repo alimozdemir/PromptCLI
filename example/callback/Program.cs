@@ -25,13 +25,13 @@ namespace callback
 
             var prompt = new Prompt();
             prompt.Add(new InputComponent("Project Name", "Project1"))
-                .Callback(i => project.ProjectName = i.Status)
+                .Callback(i => project.ProjectName = i)
                 .Add(new SelectComponent<string>("License Type", new List<string>() { "MIT", "Apache", "GNU" } ))
-                .Callback(i => project.License = i.Status)
+                .Callback(i => project.License = i)
                 .Add(new CheckboxComponent<string>("Features", new List<string>() { "Linter", "Router", "Other" }))
-                .Callback(i => project.Features = i.Status)
+                .Callback(i => project.Features = i)
                 .Add(new InputComponent("Description"))
-                .Callback(i => project.Description = i.Status);
+                .Callback(i => project.Description = i);
             prompt.Begin();
 
             Console.WriteLine();

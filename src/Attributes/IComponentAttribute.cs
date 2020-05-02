@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace PromptCLI
@@ -7,5 +8,6 @@ namespace PromptCLI
     {
         IComponent Component { get; }
         object GetResult();
+        void SetCallback(PropertyInfo prop, object @class);
     }
 }

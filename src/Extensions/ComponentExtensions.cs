@@ -8,18 +8,16 @@ namespace PromptCLI
     {
         private static Type _genericInput = typeof(Input<>);
         private static Type _genericEnumerable = typeof(IEnumerable<>);
-        public static void GetResult(this IComponent component, Type genericType)
-        {
 
-        }
-
-        public static Type GetInputType(this ComponentType componentType, Type type) => componentType
+        public static Type GetInputType(this ComponentType componentType, Type type) => 
+            _genericInput.MakeGenericType(componentType.GetTType(type));
+        
+        public static Type GetTType(this ComponentType componentType, Type type) => componentType
             switch {
-                ComponentType.Input => _genericInput.MakeGenericType(typeof(string)),
-                ComponentType.Checkbox => _genericInput.MakeGenericType(_genericEnumerable.MakeGenericType(type)),
-                ComponentType.Select => _genericInput.MakeGenericType(type),
+                ComponentType.Input => typeof(string),
+                ComponentType.Checkbox => _genericEnumerable.MakeGenericType(type),
+                ComponentType.Select => type,
                 _ => throw new Exception("Unknown component type")
             };
-
     }
 }

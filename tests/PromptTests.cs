@@ -16,7 +16,7 @@ namespace PromptCLITests
             var comp = new InputComponent("Q");
             var result = prompt.Add(comp);
 
-            Assert.Equal(prompt, comp.Callback(It.IsAny<Action<Input<string>>>()));
+            Assert.Equal(prompt, comp.Callback(It.IsAny<Action<string>>()));
         }
 
         [Fact]

@@ -12,7 +12,7 @@ namespace PromptCLI
         public Range Range => _range;
 
         public ComponentType ComponentType => ComponentType.Select;
-        public Action<Input<T>> CallbackAction { get; private set; }
+        public Action<T> CallbackAction { get; private set; }
         public Input<T> Result => _input; // _selects[_selectedIndex].Value;
         public bool IsCompleted { get; set; }
         private int _selectedIndex = -1;
@@ -26,7 +26,7 @@ namespace PromptCLI
             _regex = "^[ ]";
         }
 
-        public SelectComponent(Input<T> input, List<T> selects)
+        public SelectComponent(Input<T> input, IList<T> selects)
             : this(input, selects, ConsoleBase.Default)
         {
         }
@@ -112,14 +112,14 @@ namespace PromptCLI
             Console.Write(" > ");
             Console.WriteLine(Result.Status.ToString(), ConsoleColor.Cyan);
 
-            CallbackAction?.Invoke(this.Result);
+            CallbackAction?.Invoke(this.Result.Status);
         }
 
         public int GetTopPosition() => 1;
 
         public void Bind(IPrompt prompt) => _prompt = prompt;
 
-        public IPrompt Callback(Action<Input<T>> callback)
+        public IPrompt Callback(Action<T> callback)
         {
             CallbackAction = callback;
             return _prompt;

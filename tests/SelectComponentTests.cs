@@ -241,7 +241,7 @@ namespace PromptCLITests
         public void Complete_Callback_Invoked()
         {
             var console = new Mock<IConsoleBase>();
-            var mockCallback = new Mock<Action<Input<string>>>();
+            var mockCallback = new Mock<Action<string>>();
 
             const string text = "Input text";
             var list = GetList(3);
@@ -250,7 +250,7 @@ namespace PromptCLITests
             component.Draw();
             component.Callback(mockCallback.Object);
             component.Complete();
-            mockCallback.Verify(i => i.Invoke(component.Result));
+            mockCallback.Verify(i => i.Invoke(component.Result.Status));
         }
 
         
@@ -267,7 +267,7 @@ namespace PromptCLITests
             component.Draw();
             component.Bind(mockPrompt.Object);
 
-            var result = component.Callback(It.IsAny<Action<Input<string>>>());
+            var result = component.Callback(It.IsAny<Action<string>>());
 
             Assert.Equal(mockPrompt.Object, result);
         }

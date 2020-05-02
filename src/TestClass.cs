@@ -5,6 +5,8 @@ namespace PromptCLI
         [Input("What is the project name ?")]
         public string ProjectName { get; set; }
 
-        
+
+        [Input("License Type ?")]
+        public string License { get; set; }
     }
 }

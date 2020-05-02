@@ -27,6 +27,17 @@ namespace PromptCLI
             return comp;
         }
 
+        public void Add(IComponent comp)
+        {
+            _components.Enqueue(comp);
+        }
+
+        public void AddPoco<T>(T obj)
+        {
+            PocoBuilder builder = new PocoBuilder();
+            builder.Run(obj, this);
+        }
+
         private void Clear()
         {
             Console.Clear();
@@ -58,6 +69,18 @@ namespace PromptCLI
                 Console.SetCursorPosition(0, _offsetTop);
             }
         }
+
+        public void Run<T>(T poco)
+        {
+            var type = typeof(T);
+            var getAttributes = (IComponentAttribute[])Attribute.GetCustomAttributes(type, typeof(IComponentAttribute));
+
+            foreach(var attr in getAttributes)
+                _components.Enqueue(attr.Component);
+
+
+            
+        }    
 
     }
 

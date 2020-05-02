@@ -9,7 +9,7 @@ namespace PromptCLI
         private readonly Input<string> _input;
 
         public ComponentType ComponentType => ComponentType.Input;
-        public Action<Input<string>> CallbackAction { get; private set; }
+        public Action<string> CallbackAction { get; private set; }
         public Range Range => _range;
         public Input<string> Result => _input;
         public bool IsCompleted { get; set; }
@@ -113,14 +113,14 @@ namespace PromptCLI
             Console.Write(" > ");
             Console.WriteLine(_input.Status, ConsoleColor.Cyan);
 
-            CallbackAction?.Invoke(this.Result);
+            CallbackAction?.Invoke(this.Result.Status);
         }
 
         public int GetTopPosition() => 1;
 
         public void Bind(IPrompt prompt) => _prompt = prompt;
 
-        public IPrompt Callback(Action<Input<string>> callback)
+        public IPrompt Callback(Action<string> callback)
         {
             CallbackAction = callback;
             return _prompt;

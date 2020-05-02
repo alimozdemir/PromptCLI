@@ -11,7 +11,7 @@ namespace PromptCLI
         private readonly List<T> _selects;
         private readonly bool[] _status;
         public ComponentType ComponentType => ComponentType.Checkbox;
-        public Action<Input<IEnumerable<T>>> CallbackAction { get; private set; }
+        public Action<IEnumerable<T>> CallbackAction { get; private set; }
 
         public Range Range => _range;
 
@@ -97,12 +97,12 @@ namespace PromptCLI
             Console.Write(" > ");
             Console.WriteLine(string.Join(",", Result.Status), ConsoleColor.Cyan);
 
-            CallbackAction?.Invoke(this.Result);
+            CallbackAction?.Invoke(this.Result.Status);
         }
 
         public void Bind(IPrompt prompt) => _prompt = prompt;
 
-        public IPrompt Callback(Action<Input<IEnumerable<T>>> callback)
+        public IPrompt Callback(Action<IEnumerable<T>> callback)
         {
             CallbackAction = callback;
             return _prompt;
