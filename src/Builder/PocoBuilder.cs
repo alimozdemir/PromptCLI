@@ -15,8 +15,6 @@ namespace PromptCLI
             {
                 PropertyCheck(prop, poco, prompt);
             }
-
-            
         }     
 
         private void PropertyCheck<T>(PropertyInfo prop, T poco, Prompt prompt)

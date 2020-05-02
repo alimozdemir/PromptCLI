@@ -15,7 +15,7 @@ namespace basics
             prompt.Add(new CheckboxComponent<string>("Features", new List<string>() { "Linter", "Router", "Other" }));
             prompt.Add(new InputComponent("Description"));
             prompt.Begin();*/
-            
+
             var obj = new TestClass();
             var prompt = new Prompt();
 
@@ -28,6 +28,7 @@ namespace basics
             Console.WriteLine("---- ProjectName:" + obj.ProjectName);
             Console.WriteLine("---- License:" + obj.License);
             Console.WriteLine("---- Level:" + string.Join(",", obj.Level));
+            Console.WriteLine("---- Description:" + obj.Description);
         }
 
 
@@ -38,9 +39,13 @@ namespace basics
 
             [Select(typeof(string), "License Type ?", "MIT", "GNU", "Apache")]
             public string License { get; set; }
-            
-            [Checkbox(typeof(int), "Level ?", 1,2,3,4)]
+
+            [Checkbox(typeof(int), "Level ?", 1, 2, 3, 4)]
             public IEnumerable<int> Level { get; set; }
+
+            [Input("Briefly explain ?")]
+            public string Description { get; set; }
         }
+
     }
 }

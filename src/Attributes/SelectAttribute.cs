@@ -14,7 +14,7 @@ namespace PromptCLI
         // we need generic attribute to better support
         // https://github.com/dotnet/roslyn/pull/26337
         public override IComponent Component { get; }
-        public override Type Type => _type;
+        public override ComponentType Type => ComponentType.Select;
         private object _fullComponent;
         private PropertyInfo _prop;
 
@@ -23,28 +23,18 @@ namespace PromptCLI
 
         public SelectAttribute(Type type, string text, params object[] vals)
         {
+            // implicit operator does not work with reflection, therefore we have to create input by ourselves
             var inputType = typeof(Input<>).MakeGenericType(type);
             var input = Activator.CreateInstance(inputType, text);
+
             // create the component instance
             var nonGenericType = typeof(SelectComponent<>);
             _genericType = nonGenericType.MakeGenericType(type);
 
-            var listType = typeof(List<>).MakeGenericType(type);
+            _fullComponent = Activator.CreateInstance(_genericType, input, ConvertList(vals, type));
 
-            _fullComponent = Activator.CreateInstance(_genericType, input, ConvertList(vals.ToList(), type));
             this.Component = (IComponent)_fullComponent;
             _type = type;
-        }
-
-        public override object GetResult()
-        {
-            var resultProperty = _genericType.GetProperty("Result");
-            var data = resultProperty.GetValue(this.Component);
-
-            var resultGenericType = this.Component.ComponentType.GetInputType(_type);
-            var statusProperty = resultGenericType.GetProperty("Status");
-
-            return statusProperty.GetValue(data);
         }
 
         public override void SetCallback(PropertyInfo prop, object @class)

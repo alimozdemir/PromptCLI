@@ -9,10 +9,8 @@ namespace PromptCLI
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
     public abstract class BaseAttribute : Attribute, IComponentAttribute
     {
-        public abstract Type Type { get; }
+        public abstract ComponentType Type { get; }
         public abstract IComponent Component { get; }
-
-        public abstract object GetResult();
 
         public abstract void SetCallback(PropertyInfo prop, object @class);
 
@@ -24,7 +22,7 @@ namespace PromptCLI
         /// <param name="type"></param>
         /// <param name="performConversion"></param>
         /// <returns></returns>
-        public object ConvertList(List<object> items, Type type)
+        public object ConvertList(object[] items, Type type)
         {
             var enumerableType = typeof(System.Linq.Enumerable);
             var castMethod = enumerableType.GetMethod(nameof(System.Linq.Enumerable.Cast)).MakeGenericMethod(type);
