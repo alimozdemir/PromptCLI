@@ -15,6 +15,7 @@ namespace PromptCLI
         // https://github.com/dotnet/roslyn/pull/26337
         public override IComponent Component { get; }
         public override ComponentType Type => ComponentType.Select;
+        public override Type PropertyType => _type;
         private object _fullComponent;
         private PropertyInfo _prop;
 

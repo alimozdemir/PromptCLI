@@ -10,6 +10,7 @@ namespace PromptCLI
         private InputComponent _component;
         public override IComponent Component => _component;
         public override ComponentType Type => ComponentType.Input;
+        public override Type PropertyType => typeof(string);
 
         public InputAttribute(string text, string defaultValue = null)
         {

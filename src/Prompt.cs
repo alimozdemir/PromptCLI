@@ -51,6 +51,9 @@ namespace PromptCLI
             if (!(Attribute.GetCustomAttribute(prop, typeof(BaseAttribute)) is BaseAttribute attr))
                 return;
 
+            if (prop.PropertyType != attr.PropertyType)
+                throw new Exception($"{prop.Name} is not valid with {attr.PropertyType}");
+
             this.Add(attr.Component);
 
             attr.SetCallback(prop, poco);

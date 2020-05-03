@@ -10,6 +10,7 @@ namespace PromptCLI
     public abstract class BaseAttribute : Attribute, IComponentAttribute
     {
         public abstract ComponentType Type { get; }
+        public abstract Type PropertyType { get; }
         public abstract IComponent Component { get; }
 
         public abstract void SetCallback(PropertyInfo prop, object @class);
