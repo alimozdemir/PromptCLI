@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace PromptCLI
 {
@@ -32,10 +33,27 @@ namespace PromptCLI
             _components.Enqueue(comp);
         }
 
-        public void AddPoco<T>(T obj)
+        public void AddClass<T>(T poco) where T : class
         {
-            PocoBuilder builder = new PocoBuilder();
-            builder.Run(obj, this);
+            var type = typeof(T);
+            var props = type.GetProperties();
+
+            foreach (var prop in props)
+            {
+                SetPropertyCallback(prop, poco);
+            }
+        }     
+
+        private void SetPropertyCallback<T>(PropertyInfo prop, T poco)
+        {
+            var attr = (BaseAttribute)Attribute.GetCustomAttribute(prop, typeof(BaseAttribute));
+            
+            if (attr == null)
+                return;
+
+            this.Add(attr.Component);
+
+            attr.SetCallback(prop, poco);
         }
 
         private void Clear()
@@ -69,18 +87,6 @@ namespace PromptCLI
                 Console.SetCursorPosition(0, _offsetTop);
             }
         }
-
-        public void Run<T>(T poco)
-        {
-            var type = typeof(T);
-            var getAttributes = (IComponentAttribute[])Attribute.GetCustomAttributes(type, typeof(IComponentAttribute));
-
-            foreach(var attr in getAttributes)
-                _components.Enqueue(attr.Component);
-
-
-            
-        }    
 
     }
 

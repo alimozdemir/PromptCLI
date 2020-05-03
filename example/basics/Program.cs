@@ -19,7 +19,7 @@ namespace basics
             var obj = new TestClass();
             var prompt = new Prompt();
 
-            prompt.AddPoco(obj);
+            prompt.AddClass(obj);
 
             prompt.Begin();
 
