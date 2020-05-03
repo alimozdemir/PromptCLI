@@ -17,6 +17,37 @@ prompt.Add(new InputComponent("Description"));
 prompt.Begin();
 ```
 
+## Attributes
+
+```csharp
+public class TestClass
+{
+    [Input("Project Name ?")]
+    public string ProjectName { get; set; }
+
+    [Select(typeof(string), "License Type ?", "MIT", "GNU", "Apache")]
+    public string License { get; set; }
+
+    [Checkbox(typeof(int), "Level ?", 1, 2, 3, 4)]
+    public IEnumerable<int> Level { get; set; }
+
+    [Input("Briefly explain ?")]
+    public string Description { get; set; }
+}
+
+static void Main(string[] args)
+{
+    var obj = new TestClass();
+    var prompt = new Prompt();
+
+    prompt.AddClass(obj);
+
+    prompt.Begin();
+}
+
+```
+
+
 ## Callback Action
 
 You can handle callback action after each step
@@ -26,13 +57,13 @@ var project = new Project();
 
 var prompt = new Prompt();
 prompt.Add(new InputComponent("Project Name", "Project1"))
-    .Callback(i => project.ProjectName = i.Status)
+    .Callback(i => project.ProjectName = i)
     .Add(new SelectComponent<string>("License Type", new List<string>() { "MIT", "Apache", "GNU" } ))
-    .Callback(i => project.License = i.Status)
+    .Callback(i => project.License = i)
     .Add(new CheckboxComponent<string>("Features", new List<string>() { "Linter", "Router", "Other" }))
-    .Callback(i => project.Features = i.Status)
+    .Callback(i => project.Features = i)
     .Add(new InputComponent("Description"))
-    .Callback(i => project.Description = i.Status);
+    .Callback(i => project.Description = i);
 prompt.Begin();
 ```
 
@@ -40,7 +71,7 @@ prompt.Begin();
 
 - Unit tests
 - Define data attributes for specify the components
-- Fulfill the POCO class with right components
+- Linked list implementation on Prompt class
 
 # Contributions
 

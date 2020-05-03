@@ -7,6 +7,8 @@ namespace PromptCLI
     public interface IPrompt
     {
         IComponentPrompt<T> Add<T>(IComponent<T> comp);
+        void Add(IComponent comp);
+        void AddClass<T>(T poco) where T : class;
         void Begin();
     }
 
@@ -42,13 +44,11 @@ namespace PromptCLI
             {
                 SetPropertyCallback(prop, poco);
             }
-        }     
+        }
 
         private void SetPropertyCallback<T>(PropertyInfo prop, T poco)
         {
-            var attr = (BaseAttribute)Attribute.GetCustomAttribute(prop, typeof(BaseAttribute));
-            
-            if (attr == null)
+            if (!(Attribute.GetCustomAttribute(prop, typeof(BaseAttribute)) is BaseAttribute attr))
                 return;
 
             this.Add(attr.Component);

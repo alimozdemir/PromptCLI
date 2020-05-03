@@ -18,11 +18,11 @@ namespace PromptCLI
 
         protected IConsoleBase Console => _console;
 
-        public ComponentBase(): this(ConsoleBase.Default)
+        protected ComponentBase(): this(ConsoleBase.Default)
         {
         }
 
-        public ComponentBase(IConsoleBase console)
+        protected ComponentBase(IConsoleBase console)
         {
             _console = console;
         }
