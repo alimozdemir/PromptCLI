@@ -32,7 +32,7 @@ namespace attributes
             [Input("What is the project name ?")]
             public string ProjectName { get; set; }
 
-            [Select(typeof(int), "License Type ?", "MIT", "GNU", "Apache")]
+            [Select(typeof(string), "License Type ?", "MIT", "GNU", "Apache")]
             public string License { get; set; }
 
             [Checkbox(typeof(int), "Level ?", 1, 2, 3, 4)]

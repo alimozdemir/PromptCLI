@@ -1,15 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 
 namespace PromptCLI
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
     public class CheckboxAttribute : BaseAttribute
     {
-        // we need generic attribute to better support
+        // we need generic attribute for better support
         // https://github.com/dotnet/roslyn/pull/26337
         public override IComponent Component { get; }
         public override ComponentType Type => ComponentType.Checkbox;
