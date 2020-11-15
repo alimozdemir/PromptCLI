@@ -9,7 +9,8 @@ namespace PromptCLI
 
         protected IConsoleBase Console => _console;
 
-        protected ComponentBase(): this(ConsoleBase.Default)
+        protected ComponentBase()
+            : this(ConsoleBase.Default)
         {
         }
 
@@ -25,7 +26,23 @@ namespace PromptCLI
         protected Range _range;
         protected IPrompt _prompt;
 
-        protected PromptConfig _config;
+        protected PromptConfig _config 
+        { 
+            get 
+            {
+                // for test cases and individual uses
+                if (__config == null)
+                    __config = PromptConfig.Default;
+
+                return __config;
+            }
+            set 
+            {
+                __config = value;
+            }
+        }
+
+        private PromptConfig __config;
 
         private bool topBound(int top) => top > _offsetTop && top < _offsetTop + _maxTop;
         private bool leftBound(int left) => left >= _range.Start.Value && left <= _range.End.Value;

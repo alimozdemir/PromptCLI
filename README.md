@@ -37,12 +37,9 @@ public class TestClass
 
 static void Main(string[] args)
 {
-    var obj = new TestClass();
     var prompt = new Prompt();
 
-    prompt.AddClass(obj);
-
-    prompt.Begin();
+    var obj = prompt.Run<TestClass>(obj);
 }
 
 ```

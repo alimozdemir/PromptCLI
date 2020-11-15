@@ -66,6 +66,7 @@ namespace PromptCLI
 
         private void Toggle(int index)
         {
+            // update flags
             _selectedIndex = index;
             _input.Status = _selects[_selectedIndex];
 
@@ -76,7 +77,7 @@ namespace PromptCLI
             // write the label
             Console.Write('•', ConsoleColor.DarkRed);
 
-            // get backward (old) position
+            // go backward (old) position
             SetPosition();
         }
 
@@ -87,12 +88,15 @@ namespace PromptCLI
                 return;
 
             int tempTop = _cursorPointTop;
-            _cursorPointTop = _offsetTop + 1 + _selectedIndex;
 
+            // get checked last position
+            _cursorPointTop = _offsetTop + 1 + _selectedIndex;
             SetPosition();
 
+            // clear old select
             Console.Write(' ');
 
+            // get back to the last position
             _cursorPointTop = tempTop;
             SetPosition();
         }
