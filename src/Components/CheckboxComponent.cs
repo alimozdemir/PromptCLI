@@ -38,7 +38,7 @@ namespace PromptCLI
 
         public override void Draw(bool defaultValue = true)
         {
-            Console.Write(prefix, _config.CursorColor);
+            Console.Write(_config.Cursor, _config.CursorColor);
             Console.WriteLine(_input.Text, _config.QuestionColor);
 
             foreach(var item in _selects)

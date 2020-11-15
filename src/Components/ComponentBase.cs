@@ -6,7 +6,6 @@ namespace PromptCLI
     public abstract class ComponentBase : IComponent
     {
         private readonly IConsoleBase _console;
-        protected const string prefix = "> ";
 
         protected IConsoleBase Console => _console;
 

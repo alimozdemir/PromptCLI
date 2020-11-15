@@ -29,8 +29,8 @@ namespace PromptCLI
 
         public override void Draw(bool defaultValue = true)
         {
-            int startPoint = prefix.Length + _input.Text.Length + 1;
-            Console.Write(prefix, _config.CursorColor);
+            int startPoint = _config.Cursor.Length + _input.Text.Length + 1;
+            Console.Write(_config.Cursor, _config.CursorColor);
             Console.Write(_input.Text, _config.QuestionColor);
 
             if (defaultValue && !string.IsNullOrEmpty(_defaultValue))
