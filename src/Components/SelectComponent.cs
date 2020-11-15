@@ -41,7 +41,7 @@ namespace PromptCLI
             }
 
             // default toggled value's index
-            Toggle(1);
+            Toggle(0);
         }
 
         public override void Handle(ConsoleKeyInfo act)
