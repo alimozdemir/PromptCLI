@@ -20,7 +20,7 @@ namespace PromptCLI
         private readonly PromptConfig _config;
 
         public Prompt()
-            : this(new PromptConfig())
+            : this(PromptConfig.Default)
         {
         }
 

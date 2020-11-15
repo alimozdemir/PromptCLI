@@ -28,6 +28,10 @@ namespace PromptCLI
 
         protected PromptConfig _config;
 
+        private bool topBound(int top) => top > _offsetTop && top < _offsetTop + _maxTop;
+        private bool leftBound(int left) => left >= _range.Start.Value && left <= _range.End.Value;
+        private KeyInfo isThisAvailable(char key) => 
+            Regex.Match(key.ToString(), _regex, RegexOptions.IgnoreCase).Success ? KeyInfo.Others : KeyInfo.Unknown;
 
         protected void Direction(ConsoleKey key)
         {
@@ -49,13 +53,6 @@ namespace PromptCLI
             SetPosition();
         }
         protected void SetPosition() => _console.SetPosition(_cursorPointLeft, _cursorPointTop);
-
-        private bool topBound(int top) => top > _offsetTop && top < _offsetTop + _maxTop;
-        private bool leftBound(int left) => left >= _range.Start.Value && left <= _range.End.Value;
-
-        private KeyInfo isThisAvailable(char key) => 
-            Regex.Match(key.ToString(), _regex, RegexOptions.IgnoreCase).Success ? KeyInfo.Others : KeyInfo.Unknown;
-
         protected (KeyInfo, ConsoleKey) IsKeyAvailable(ConsoleKeyInfo act) =>
             act.Key switch
             {
@@ -82,10 +79,8 @@ namespace PromptCLI
         public abstract ComponentType ComponentType { get; }
 
         public abstract bool IsCompleted { get; set; }
-
-        public abstract int CursorTop { get; }
-
-        public abstract int CursorLeft { get; }
+        public int CursorLeft => _cursorPointLeft;
+        public int CursorTop => _cursorPointTop;
 
         public abstract void Complete();
 
@@ -111,8 +106,6 @@ namespace PromptCLI
         {
         }
 
-        public override int CursorLeft => _cursorPointLeft;
-        public override int CursorTop => _cursorPointTop;
 
         public abstract Input<T> Result { get; }
 
