@@ -32,7 +32,7 @@ namespace PromptCLI
 
         public override void Draw(bool defaultValue = true)
         {
-            Console.Write(_config.Cursor,  _config.CursorColor);
+            Console.Write(_config.Cursor, _config.CursorColor);
             Console.WriteLine(_input.Text, _config.QuestionColor);
 
             foreach (var item in _selects)
@@ -42,12 +42,6 @@ namespace PromptCLI
 
             // default toggled value's index
             Toggle(1);
-        }
-
-        private void ChangeSelected(int index)
-        {
-            _selectedIndex = index;
-            _input.Status = _selects[_selectedIndex];
         }
 
         public override void Handle(ConsoleKeyInfo act)
@@ -72,26 +66,33 @@ namespace PromptCLI
 
         private void Toggle(int index)
         {
-            ChangeSelected(index);
-            
-            int tempTop = _cursorPointTop;
-            _cursorPointTop = _offsetTop + 1 + _selectedIndex;
+            _selectedIndex = index;
+            _input.Status = _selects[_selectedIndex];
 
-            SetPosition();            
+            // make sure the position is ok
+            _cursorPointTop = _offsetTop + 1 + _selectedIndex;
+            SetPosition();
+
+            // write the label
             Console.Write('•', ConsoleColor.DarkRed);
-            _cursorPointTop = tempTop;
+
+            // get backward (old) position
             SetPosition();
         }
 
         private void ClearOldPosition()
         {
+            // if the selected index exists
+            if (_selectedIndex < 0)
+                return;
+
             int tempTop = _cursorPointTop;
             _cursorPointTop = _offsetTop + 1 + _selectedIndex;
 
             SetPosition();
 
             Console.Write(' ');
-            
+
             _cursorPointTop = tempTop;
             SetPosition();
         }
@@ -111,7 +112,7 @@ namespace PromptCLI
             {
                 Console.ClearLine(_offsetTop + i);
             }
-            
+
             _cursorPointLeft = 0;
             _cursorPointTop = _offsetTop;
             SetPosition();
