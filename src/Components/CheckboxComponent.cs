@@ -51,10 +51,12 @@ namespace PromptCLI
 
         public override void Handle(ConsoleKeyInfo act)
         {
+            var index = _cursorPointTop - _offsetTop - 1;
             var (result, key) = IsKeyAvailable(act);
             if (result == KeyInfo.Unknown)
             {
                 ClearCurrentPosition();
+                Check();
                 return;
             }
             else if (result == KeyInfo.Direction)
@@ -63,11 +65,10 @@ namespace PromptCLI
                 return;
             }
 
-            var index = _cursorPointTop - _offsetTop - 1;
-
+            void Check() => WriteCurrent(_status[index] ? '•' : ' ', ConsoleColor.DarkRed);
+            
             _status[index] = !_status[index];
-
-            WriteCurrent(_status[index] ? '•' : ' ', ConsoleColor.DarkRed);
+            Check();
         }
 
         public override void SetTopPosition(int top)
@@ -94,9 +95,9 @@ namespace PromptCLI
             SetPosition();
 
             // Write the result
-            Console.Write(_input.Text);
+            Console.Write(_input.Text, _config.QuestionColor);
             Console.Write(" > ");
-            Console.WriteLine(string.Join(",", Result.Status), ConsoleColor.Cyan);
+            Console.WriteLine(string.Join(",", Result.Status), _config.AnswerColor);
 
             CallbackAction?.Invoke(this.Result.Status);
         }

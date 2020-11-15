@@ -107,9 +107,9 @@ namespace PromptCLI
             SetPosition();
 
             // Write the result
-            Console.Write(_input.Text);
+            Console.Write(_input.Text, _config.QuestionColor);
             Console.Write(" > ");
-            Console.WriteLine(Result.Status.ToString(), ConsoleColor.Cyan);
+            Console.WriteLine(Result.Status.ToString(), _config.AnswerColor);
 
             CallbackAction?.Invoke(this.Result.Status);
         }
