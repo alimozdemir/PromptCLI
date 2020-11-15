@@ -40,8 +40,8 @@ namespace PromptCLI
                 Console.WriteLine(string.Format("( ) {0}", item));
             }
 
-            ChangeSelected(0);
-            toggle(0);
+            // default toggled value's index
+            Toggle(1);
         }
 
         private void ChangeSelected(int index)
@@ -49,6 +49,7 @@ namespace PromptCLI
             _selectedIndex = index;
             _input.Status = _selects[_selectedIndex];
         }
+
         public override void Handle(ConsoleKeyInfo act)
         {
             var (result, key) = IsKeyAvailable(act);
@@ -65,22 +66,31 @@ namespace PromptCLI
 
             var index = _cursorPointTop - _offsetTop - 1;
 
-            SetPosition();
-            toggle();
-            ChangeSelected(index);
-            toggle(index);
+            ClearOldPosition();
+            Toggle(index);
         }
-        private void toggle(int index = -1)
+
+        private void Toggle(int index)
+        {
+            ChangeSelected(index);
+            
+            int tempTop = _cursorPointTop;
+            _cursorPointTop = _offsetTop + 1 + _selectedIndex;
+
+            SetPosition();            
+            Console.Write('•', ConsoleColor.DarkRed);
+            _cursorPointTop = tempTop;
+            SetPosition();
+        }
+
+        private void ClearOldPosition()
         {
             int tempTop = _cursorPointTop;
             _cursorPointTop = _offsetTop + 1 + _selectedIndex;
 
             SetPosition();
 
-            if (index > -1) 
-                Console.Write('•', ConsoleColor.DarkRed);
-            else
-                Console.Write(' ');
+            Console.Write(' ');
             
             _cursorPointTop = tempTop;
             SetPosition();
