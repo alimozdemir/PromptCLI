@@ -54,8 +54,6 @@ namespace PromptCLI
             }
         }
 
-
-
         private void SetPropertyCallback<T>(PropertyInfo prop, T poco)
         {
             if (!(Attribute.GetCustomAttribute(prop, typeof(BaseAttribute)) is BaseAttribute attr))

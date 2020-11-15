@@ -52,6 +52,17 @@ prompt.Add(new InputComponent("Project Name", "Project1"))
 prompt.Begin();
 ```
 
+## Config
+
+```csharp
+public class PromptConfig
+{
+    public ConsoleColor QuestionColor { get; } = ConsoleColor.Gray;
+    public ConsoleColor AnswerColor { get; } = ConsoleColor.Cyan;
+    public ConsoleColor CursorColor { get; } = ConsoleColor.Red;
+    public string Cursor { get; } = "> ";
+}
+```
 # Contributions
 
 All contributions are welcome if well described.
