@@ -8,7 +8,7 @@ namespace PromptCLI
     {
         IComponentPrompt<T> Add<T>(IComponent<T> comp);
         void Add(IComponent comp);
-        void AddClass<T>(T poco) where T : class;
+        T Run<T>() where T : class, new();
         void Begin();
     }
 
@@ -35,7 +35,7 @@ namespace PromptCLI
             _components.Enqueue(comp);
         }
 
-        public void AddClass<T>(T poco) where T : class
+        private void AddClassProperties<T>(T poco) where T : class
         {
             var type = typeof(T);
             var props = type.GetProperties();
@@ -46,14 +46,18 @@ namespace PromptCLI
             }
         }
 
+
+
         private void SetPropertyCallback<T>(PropertyInfo prop, T poco)
         {
             if (!(Attribute.GetCustomAttribute(prop, typeof(BaseAttribute)) is BaseAttribute attr))
                 return;
 
+            /* enable later
             if (prop.PropertyType != attr.PropertyType)
-                throw new Exception($"{prop.Name} is not valid with {attr.PropertyType}");
-
+                throw new Exception($"{prop.Name} is not valid with {attr.PropertyType}-{prop.PropertyType}");
+            */
+            
             this.Add(attr.Component);
 
             attr.SetCallback(prop, poco);
@@ -89,6 +93,17 @@ namespace PromptCLI
 
                 Console.SetCursorPosition(0, _offsetTop);
             }
+        }
+
+        public T Run<T>() where T : class, new()
+        {
+            var result = new T();
+
+            AddClassProperties(result);
+
+            Begin();
+
+            return result;
         }
 
     }
