@@ -125,9 +125,8 @@ namespace PromptCLITests
 
             InputComponent component = new InputComponent(text, console.Object);
             component.Draw();
-
             // make sure the input is wrote
-            console.Verify(i => i.Write(text), Times.Once);
+            console.Verify(i => i.Write(text,  It.IsAny<ConsoleColor>(), null), Times.Once);
             // and make sure the start length must be higher than text length
             Assert.True(component.Range.Start.Value > text.Length);
         }
@@ -144,7 +143,7 @@ namespace PromptCLITests
 
             // make sure the input is wrote
             string defaultFormattedVal = string.Format(" ({0})", defaultVal);
-            console.Verify(i => i.Write(text), Times.Once);
+            console.Verify(i => i.Write(text,  It.IsAny<ConsoleColor>(), null), Times.Once);
             console.Verify(i => i.Write(defaultFormattedVal, It.IsAny<ConsoleColor>(), null), Times.Once);
             // and make sure the start length must be higher than text length
             Assert.True(component.Range.Start.Value > text.Length);
@@ -196,7 +195,7 @@ namespace PromptCLITests
             InputComponent component = new InputComponent(text, console.Object);
 
             component.Complete();
-            console.Verify(i => i.Write(text), Times.Once);
+            console.Verify(i => i.Write(text, It.IsAny<ConsoleColor>(), null), Times.Once);
         }
 
         
