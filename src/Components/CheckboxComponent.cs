@@ -56,6 +56,7 @@ namespace PromptCLI
             if (result == KeyInfo.Unknown)
             {
                 ClearCurrentPosition();
+                // if it is checked before the the unknown char. Re-check it.
                 Check();
                 return;
             }
@@ -66,7 +67,7 @@ namespace PromptCLI
             }
 
             void Check() => WriteCurrent(_status[index] ? '•' : ' ', ConsoleColor.DarkRed);
-            
+
             _status[index] = !_status[index];
             Check();
         }

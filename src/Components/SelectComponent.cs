@@ -46,10 +46,18 @@ namespace PromptCLI
 
         public override void Handle(ConsoleKeyInfo act)
         {
+            var index = _cursorPointTop - _offsetTop - 1;
             var (result, key) = IsKeyAvailable(act);
             if (result == KeyInfo.Unknown)
             {
                 ClearCurrentPosition();
+
+                // If the current index is selected. Then re-toggle it. 
+                if (index == _selectedIndex)
+                {
+                    Toggle(index);
+                }
+
                 return;
             }
             else if (result == KeyInfo.Direction)
@@ -58,7 +66,6 @@ namespace PromptCLI
                 return;
             }
 
-            var index = _cursorPointTop - _offsetTop - 1;
 
             ClearOldPosition();
             Toggle(index);
