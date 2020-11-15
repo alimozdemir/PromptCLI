@@ -8,7 +8,7 @@ namespace PromptCLI
     {
         // we need generic attribute for better support
         // https://github.com/dotnet/roslyn/pull/26337
-        public override IComponent Component { get; }
+        public override ComponentBase Component { get; }
         public override ComponentType Type => ComponentType.Checkbox;
         public override Type PropertyType => _type;
         private object _fullComponent;
@@ -27,7 +27,7 @@ namespace PromptCLI
             _genericType = nonGenericType.MakeGenericType(type);
 
             _fullComponent = Activator.CreateInstance(_genericType, input, ConvertList(vals, type));
-            this.Component = (IComponent)_fullComponent;
+            this.Component = (ComponentBase)_fullComponent;
             _type = type;
         }
 

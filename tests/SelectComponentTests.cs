@@ -30,7 +30,7 @@ namespace PromptCLITests
             component.Draw();
 
             // make sure the input is wrote
-            console.Verify(i => i.WriteLine(text), Times.Once);
+            console.Verify(i => i.WriteLine(text, It.IsAny<ConsoleColor>(), null), Times.Once);
 
             foreach (var item in list)
                 console.Verify(i => i.WriteLine(string.Format("( ) {0}", item)), Times.Once);
@@ -47,7 +47,7 @@ namespace PromptCLITests
             component.Draw();
 
             // make sure the input is wrote
-            console.Verify(i => i.WriteLine(text), Times.Once);
+            console.Verify(i => i.WriteLine(text,  It.IsAny<ConsoleColor>(), null), Times.Once);
 
             foreach (var item in list)
                 console.Verify(i => i.WriteLine(string.Format("( ) {0}", item)), Times.Once);
@@ -234,7 +234,7 @@ namespace PromptCLITests
 
             component.Complete();
             
-            console.Verify(i => i.Write(text));
+            console.Verify(i => i.Write(text,  It.IsAny<ConsoleColor>(), null));
         }
 
         [Fact]

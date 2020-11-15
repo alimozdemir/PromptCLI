@@ -2,19 +2,20 @@ using System;
 
 namespace PromptCLI
 {
-    public class InputComponent : ComponentBase, IComponent<string>
+    public class InputComponent : ComponentBase<string>
     {
         private readonly string _defaultValue;
         private readonly Input<string> _input;
+        private Action<string> _callback;
 
-        public ComponentType ComponentType => ComponentType.Input;
-        public Action<string> CallbackAction { get; private set; }
+        public override ComponentType ComponentType => ComponentType.Input;
+        public override Action<string> CallbackAction => _callback;
         public Range Range => _range;
-        public Input<string> Result => _input;
-        public bool IsCompleted { get; set; }
+        public override Input<string> Result => _input;
+        public override bool IsCompleted { get; set; }
 
         public InputComponent(Input<string> input, IConsoleBase console,  string defaultValue = default)
-            :base(console)
+            : base(console)
         {
             _defaultValue = defaultValue;
             _input = input;
@@ -26,11 +27,11 @@ namespace PromptCLI
         {
         }
 
-        public void Draw(bool defaultValue = true)
+        public override void Draw(bool defaultValue = true)
         {
-            int startPoint = prefix.Length + _input.Text.Length + 1;
-            Console.Write(prefix, ConsoleColor.Green);
-            Console.Write(_input.Text);
+            int startPoint = _config.Cursor.Length + _input.Text.Length + 1;
+            Console.Write(_config.Cursor, _config.CursorColor);
+            Console.Write(_input.Text, _config.QuestionColor);
 
             if (defaultValue && !string.IsNullOrEmpty(_defaultValue))
             {
@@ -54,7 +55,7 @@ namespace PromptCLI
             SetPosition();
         }
 
-        public void Handle(ConsoleKeyInfo act)
+        public override void Handle(ConsoleKeyInfo act)
         {
             // Special for each component
             var (result, key) = IsKeyAvailable(act);
@@ -89,13 +90,13 @@ namespace PromptCLI
         }
 
 
-        public void SetTopPosition(int top)
+        public override void SetTopPosition(int top)
         {
             _cursorPointTop = top;
             _maxTop = top + 1;
         }
 
-        public void Complete()
+        public override void Complete()
         {
             // if no input detected, then set the result into the input.status
             if (string.IsNullOrEmpty(_input.Status) && !string.IsNullOrEmpty(_defaultValue))
@@ -108,20 +109,20 @@ namespace PromptCLI
             SetPosition();
             
             // Write the result 
-            Console.Write(_input.Text);
+            Console.Write(_input.Text, _config.QuestionColor);
             Console.Write(" > ");
-            Console.WriteLine(_input.Status, ConsoleColor.Cyan);
+            Console.WriteLine(_input.Status, _config.AnswerColor);
 
             CallbackAction?.Invoke(this.Result.Status);
         }
 
-        public int GetTopPosition() => 1;
+        public override int GetTopPosition() => 1;
 
-        public void Bind(IPrompt prompt) => _prompt = prompt;
+        public override void Bind(IPrompt prompt) => _prompt = prompt;
 
-        public IPrompt Callback(Action<string> callback)
+        public override IPrompt Callback(Action<string> callback)
         {
-            CallbackAction = callback;
+            _callback = callback;
             return _prompt;
         }
     }

@@ -6,18 +6,7 @@ PromptCLI is inspired from inquirer.js and enquirer.js. It is a interactive comm
 
 ![Basics](https://github.com/lyzerk/PromptCLI/raw/master/assets/gifs/basics.gif "Basics")
 
-# Basics
-
-```csharp
-var prompt = new Prompt();
-prompt.Add(new InputComponent("Project Name", "Project1"));
-prompt.Add(new SelectComponent<string>("License Type", new List<string>() { "MIT", "Apache", "GNU" } ));
-prompt.Add(new CheckboxComponent<string>("Features", new List<string>() { "Linter", "Router", "Other" }));
-prompt.Add(new InputComponent("Description"));
-prompt.Begin();
-```
-
-## Attributes
+# Usage
 
 ```csharp
 public class TestClass
@@ -37,42 +26,43 @@ public class TestClass
 
 static void Main(string[] args)
 {
-    var obj = new TestClass();
     var prompt = new Prompt();
 
-    prompt.AddClass(obj);
-
-    prompt.Begin();
+    var obj = prompt.Run<TestClass>(obj);
 }
 
 ```
 
+## Without POCO class (Callback Action)
 
-## Callback Action
-
-You can handle callback action after each step
+You can handle a callback action after each step
 
 ```csharp
 var project = new Project();
 
 var prompt = new Prompt();
 prompt.Add(new InputComponent("Project Name", "Project1"))
-    .Callback(i => project.ProjectName = i)
+        .Callback(i => project.ProjectName = i)
     .Add(new SelectComponent<string>("License Type", new List<string>() { "MIT", "Apache", "GNU" } ))
-    .Callback(i => project.License = i)
+        .Callback(i => project.License = i)
     .Add(new CheckboxComponent<string>("Features", new List<string>() { "Linter", "Router", "Other" }))
-    .Callback(i => project.Features = i)
+        .Callback(i => project.Features = i)
     .Add(new InputComponent("Description"))
-    .Callback(i => project.Description = i);
+        .Callback(i => project.Description = i);
 prompt.Begin();
 ```
 
-# Todo
+## Config
 
-- Unit tests
-- Define data attributes for specify the components
-- Linked list implementation on Prompt class
-
+```csharp
+public class PromptConfig
+{
+    public ConsoleColor QuestionColor { get; } = ConsoleColor.Gray;
+    public ConsoleColor AnswerColor { get; } = ConsoleColor.Cyan;
+    public ConsoleColor CursorColor { get; } = ConsoleColor.Red;
+    public string Cursor { get; } = "> ";
+}
+```
 # Contributions
 
 All contributions are welcome if well described.

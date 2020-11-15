@@ -24,7 +24,7 @@ namespace PromptCLITests
         {
             var prompt = new Prompt();
             var comp = new Mock<IComponent<string>>();
-            var result = prompt.Add(comp.Object);
+            // var result = prompt.Add(comp.Object);
 
             // prompt.Begin();
         }
