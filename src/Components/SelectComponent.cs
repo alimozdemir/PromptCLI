@@ -3,17 +3,18 @@ using System.Collections.Generic;
 
 namespace PromptCLI
 {
-    public class SelectComponent<T> : ComponentBase, IComponent<T>
+    public class SelectComponent<T> : ComponentBase<T>
     {
         private readonly Input<T> _input;
         private readonly IList<T> _selects;
         public Range Range => _range;
 
-        public ComponentType ComponentType => ComponentType.Select;
-        public Action<T> CallbackAction { get; private set; }
-        public Input<T> Result => _input; // _selects[_selectedIndex].Value;
-        public bool IsCompleted { get; set; }
+        public override ComponentType ComponentType => ComponentType.Select;
+        public override Action<T> CallbackAction => _callback;
+        public override Input<T> Result => _input; // _selects[_selectedIndex].Value;
+        public override bool IsCompleted { get; set; }
         private int _selectedIndex = -1;
+        private Action<T> _callback;
 
         public SelectComponent(Input<T> input, IList<T> selects, IConsoleBase console)
             : base(console)
@@ -29,10 +30,10 @@ namespace PromptCLI
         {
         }
 
-        public void Draw(bool defaultValue = true)
+        public override void Draw(bool defaultValue = true)
         {
-            Console.Write(prefix, ConsoleColor.Green);
-            Console.WriteLine(_input.Text);
+            Console.Write(prefix,  _config.CursorColor);
+            Console.WriteLine(_input.Text, _config.QuestionColor);
 
             foreach (var item in _selects)
             {
@@ -48,7 +49,7 @@ namespace PromptCLI
             _selectedIndex = index;
             _input.Status = _selects[_selectedIndex];
         }
-        public void Handle(ConsoleKeyInfo act)
+        public override void Handle(ConsoleKeyInfo act)
         {
             var (result, key) = IsKeyAvailable(act);
             if (result == KeyInfo.Unknown)
@@ -85,7 +86,7 @@ namespace PromptCLI
             SetPosition();
         }
 
-        public void SetTopPosition(int top)
+        public override void SetTopPosition(int top)
         {
             _offsetTop = top;
             _cursorPointTop = top + 1; // offset 1 for input at the begining
@@ -93,7 +94,7 @@ namespace PromptCLI
             _maxTop = _selects.Count + 1;
         }
 
-        public void Complete()
+        public override void Complete()
         {
             // Clear all drawed lines and set the cursor into component start position
             for (int i = 0; i < _selects.Count + 1; i++)
@@ -113,13 +114,13 @@ namespace PromptCLI
             CallbackAction?.Invoke(this.Result.Status);
         }
 
-        public int GetTopPosition() => 1;
+        public override int GetTopPosition() => 1;
 
-        public void Bind(IPrompt prompt) => _prompt = prompt;
+        public override void Bind(IPrompt prompt) => _prompt = prompt;
 
-        public IPrompt Callback(Action<T> callback)
+        public override IPrompt Callback(Action<T> callback)
         {
-            CallbackAction = callback;
+            _callback = callback;
             return _prompt;
         }
     }

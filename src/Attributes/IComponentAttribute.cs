@@ -4,7 +4,7 @@ namespace PromptCLI
 {
     public interface IComponentAttribute
     {
-        IComponent Component { get; }
+        ComponentBase Component { get; }
         void SetCallback(PropertyInfo prop, object @class);
     }
 }

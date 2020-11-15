@@ -25,7 +25,7 @@ namespace PromptCLI
 
     public interface IComponentPrompt<T>
     {
-        Action<T> CallbackAction { get;}
+        Action<T> CallbackAction { get; }
         void Bind(IPrompt prompt);
         IPrompt Callback(Action<T> callback);
     }

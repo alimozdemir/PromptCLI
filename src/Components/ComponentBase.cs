@@ -3,16 +3,10 @@ using System.Text.RegularExpressions;
 
 namespace PromptCLI
 {
-    public abstract class ComponentBase
+    public abstract class ComponentBase : IComponent
     {
         private readonly IConsoleBase _console;
         protected const string prefix = "> ";
-
-        protected int _cursorPointLeft, _offsetLeft, _maxLeft;
-        protected int _cursorPointTop, _offsetTop, _maxTop;
-        protected string _regex;
-        protected Range _range;
-        protected IPrompt _prompt;
 
         protected IConsoleBase Console => _console;
 
@@ -24,6 +18,16 @@ namespace PromptCLI
         {
             _console = console;
         }
+
+
+        protected int _cursorPointLeft, _offsetLeft, _maxLeft;
+        protected int _cursorPointTop, _offsetTop, _maxTop;
+        protected string _regex;
+        protected Range _range;
+        protected IPrompt _prompt;
+
+        protected PromptConfig _config;
+
 
         protected void Direction(ConsoleKey key)
         {
@@ -69,8 +73,53 @@ namespace PromptCLI
 
         protected void WriteCurrent(char val, ConsoleColor? textColor = null) => _console.WritePreservePosition(val, _cursorPointLeft, _cursorPointTop, textColor);
 
+        internal void SetConfig(PromptConfig config)
+        {
+            _config = config;
+        }
 
-        public int CursorLeft => _cursorPointLeft;
-        public int CursorTop => _cursorPointTop;
+        #region Abstracts
+        public abstract ComponentType ComponentType { get; }
+
+        public abstract bool IsCompleted { get; set; }
+
+        public abstract int CursorTop { get; }
+
+        public abstract int CursorLeft { get; }
+
+        public abstract void Complete();
+
+        public abstract void Draw(bool defaultValue = true);
+
+        public abstract int GetTopPosition();
+
+        public abstract void Handle(ConsoleKeyInfo act);
+
+        public abstract void SetTopPosition(int top);
+
+        #endregion
+
+    }
+
+    public abstract class ComponentBase<T> : ComponentBase, IComponent<T>
+    {
+        protected ComponentBase(): base(ConsoleBase.Default)
+        {
+        }
+        
+        protected ComponentBase(IConsoleBase console): base(console)
+        {
+        }
+
+        public override int CursorLeft => _cursorPointLeft;
+        public override int CursorTop => _cursorPointTop;
+
+        public abstract Input<T> Result { get; }
+
+        public abstract Action<T> CallbackAction { get; }
+
+        public abstract void Bind(IPrompt prompt);
+
+        public abstract IPrompt Callback(Action<T> callback);
     }
 }

@@ -6,31 +6,39 @@ namespace PromptCLI
 {
     public interface IPrompt
     {
-        IComponentPrompt<T> Add<T>(IComponent<T> comp);
-        void Add(IComponent comp);
+        IComponentPrompt<T> Add<T>(ComponentBase<T> comp);
+        void Add(ComponentBase comp);
         T Run<T>() where T : class, new();
         void Begin();
     }
 
     public class Prompt : IPrompt
     {
-        private readonly Queue<IComponent> _components;
-        private IComponent _currentComponent;
+        private readonly Queue<ComponentBase> _components;
+        private ComponentBase _currentComponent;
         private int _offsetTop;
+        private readonly PromptConfig _config;
+
         public Prompt()
+            : this(new PromptConfig())
         {
-            _components = new Queue<IComponent>();
-            _offsetTop = 0;
         }
 
-        public IComponentPrompt<T> Add<T>(IComponent<T> comp)
+        public Prompt(PromptConfig config)
+        {
+            _components = new Queue<ComponentBase>();
+            _offsetTop = 0;
+            _config = config;
+        }
+
+        public IComponentPrompt<T> Add<T>(ComponentBase<T> comp)
         {
             comp.Bind(this);
             _components.Enqueue(comp);
             return comp;
         }
 
-        public void Add(IComponent comp)
+        public void Add(ComponentBase comp)
         {
             _components.Enqueue(comp);
         }
@@ -57,7 +65,7 @@ namespace PromptCLI
             if (prop.PropertyType != attr.PropertyType)
                 throw new Exception($"{prop.Name} is not valid with {attr.PropertyType}-{prop.PropertyType}");
             */
-            
+
             this.Add(attr.Component);
 
             attr.SetCallback(prop, poco);
@@ -76,6 +84,8 @@ namespace PromptCLI
             while (_components.Count > 0)
             {
                 _currentComponent = _components.Dequeue();
+                
+                _currentComponent.SetConfig(_config);
 
                 _currentComponent.SetTopPosition(_offsetTop);
                 _currentComponent.Draw();

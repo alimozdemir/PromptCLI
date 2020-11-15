@@ -10,7 +10,7 @@ namespace PromptCLI
     {
         public abstract ComponentType Type { get; }
         public abstract Type PropertyType { get; }
-        public abstract IComponent Component { get; }
+        public abstract ComponentBase Component { get; }
 
         public abstract void SetCallback(PropertyInfo prop, object @class);
 
